@@ -19,7 +19,7 @@ Instrucciones para agentes de código que trabajen en este repositorio (OpenCode
 │   └── ADR-*.md         # Decisiones de arquitectura (ADR adicionales)
 ├── public/              # Estáticos de Vite (/icons.svg, /favicon.svg)
 ├── src/
-│   ├── frontend/        # React: App.jsx, main.jsx, index.css, assets/
+│   ├── frontend/        # React: App.jsx, main.jsx, index.css, assets/, components/
 │   └── backend/         # Flask: app.py, requirements.txt, Dockerfile
 ├── Dockerfile           # Imagen del frontend
 ├── docker-compose.yml
