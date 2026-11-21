@@ -29,8 +29,8 @@ Página web / portfolio personal donde cualquier persona puede explorar los proy
 | --- | --- |
 | Frontend | JavaScript, React, Vite |
 | Backend | Python, Flask |
-| Base de datos | MongoDB |
-| Entorno de desarrollo | Docker (Dockerfile) |
+| Base de datos | PostgreSQL |
+| Entorno de desarrollo | Docker (Docker Compose) |
 | Autenticación | OAuth con LinkedIn y GitHub |
 
 ## Estructura del proyecto
@@ -39,13 +39,18 @@ Página web / portfolio personal donde cualquier persona puede explorar los proy
 .
 ├── docs/
 │   ├── design/      # Diseño de Figma
-│   └── database/    # Diagrama UML de la base de datos
-├── public/          # Archivos estáticos
+│   └── database/    # Diagrama UML de la base de datos y script init.sql
 ├── src/
 │   ├── frontend/    # Aplicación React (Vite)
+│   │   ├── Dockerfile
+│   │   └── package.json
 │   └── backend/     # API Flask
+│       ├── Dockerfile
+│       ├── app.py
+│       └── requirements.txt
+├── .env.example     # Plantilla de variables de entorno
 ├── .env             # Variables de entorno (no se sube al repositorio)
-├── Dockerfile
+├── docker-compose.yml
 └── README.md
 ```
 
@@ -55,9 +60,9 @@ Página web / portfolio personal donde cualquier persona puede explorar los proy
 
 ### Requisitos previos
 
-- [Docker](https://www.docker.com/)
-- Node.js y npm (versión por definir) si se ejecuta el frontend fuera de Docker
-- Python 3 (versión por definir) si se ejecuta el backend fuera de Docker
+- [Docker](https://www.docker.com/) con Docker Compose (incluido en Docker Desktop).
+- Node.js y npm (versión por definir) si se ejecuta el frontend fuera de Docker.
+- Python 3 (versión por definir) si se ejecuta el backend fuera de Docker.
 
 ### Instalación
 
@@ -66,42 +71,60 @@ Página web / portfolio personal donde cualquier persona puede explorar los proy
 git clone <URL-DEL-REPOSITORIO>
 cd <NOMBRE-DE-LA-CARPETA>
 
-# 2. Crear el archivo de variables de entorno
-cp .env.example .env   # pendiente: crear .env.example
+# 2. Crear el archivo de variables de entorno y ajustarlo si hace falta
+cp .env.example .env
 ```
 
 ### Ejecución
 
-> Pendiente de completar cuando estén definidos los scripts y el entorno Docker.
+```bash
+# Construir las imágenes y arrancar todos los servicios
+docker compose up --build
+
+# En otra terminal, seguir los logs
+docker compose logs -f
+
+# Detener los servicios (añade -v para borrar también los datos de PostgreSQL)
+docker compose down
+```
+
+Una vez arrancado:
+
+| Servicio | Tecnología | Puerto | Descripción |
+| --- | --- | --- | --- |
+| `frontend` | React + Vite | `5173` | Interfaz web (http://localhost:5173) |
+| `backend` | Python + Flask | `5000` | API (http://localhost:5000/health) |
+| `db` | PostgreSQL 16 | `5432` | Base de datos, con tablas creadas desde `docs/database/init.sql` |
+
+El backend espera a que PostgreSQL esté listo antes de arrancar. Los datos se guardan en el volumen `pgdata`, por lo que sobreviven a `docker compose down`. Para comprobar la conexión a la base de datos:
 
 ```bash
-# Frontend
-cd src/frontend
-npm install
-npm run dev
-
-# Backend
-cd src/backend
-# comandos por definir
+curl http://localhost:5000/health/db
+# o
+docker compose exec db psql -U portfolio -d portfolio
 ```
 
 ## Variables de entorno
 
 Las variables de entorno viven en un archivo `.env` en la raíz del proyecto. **Nunca debe subirse al repositorio** (asegúrate de que está en `.gitignore`).
 
-Variables previstas (por definir):
-
 | Variable | Descripción |
 | --- | --- |
-| `MONGODB_URI` | Cadena de conexión a MongoDB |
+| `POSTGRES_USER` / `POSTGRES_PASSWORD` / `POSTGRES_DB` | Usuario, contraseña y nombre de la base de datos PostgreSQL |
+| `POSTGRES_PORT` | Puerto PostgreSQL expuesto en el host (por defecto `5432`) |
+| `DATABASE_URL` | Cadena de conexión a PostgreSQL (opcional; tiene prioridad sobre las variables `POSTGRES_*` en la API) |
+| `SECRET_KEY` | Clave secreta de Flask |
+| `FLASK_DEBUG` | Activa el modo debug de Flask (`1` en desarrollo) |
+| `CORS_ORIGINS` | Orígenes permitidos por la API (por defecto `http://localhost:5173`) |
 | `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | Credenciales OAuth de GitHub |
 | `LINKEDIN_CLIENT_ID` / `LINKEDIN_CLIENT_SECRET` | Credenciales OAuth de LinkedIn |
-| `SECRET_KEY` | Clave secreta de Flask |
+| `VITE_API_URL` | URL de la API que usa el frontend (por defecto `http://localhost:5000`) |
 
 ## Documentación
 
 - [Diseño (Figma)](docs/design)
 - [Base de datos (UML)](docs/database)
+- [Script de creación de tablas](docs/database/init.sql)
 
 ## Convenciones de ramas y commits
 
