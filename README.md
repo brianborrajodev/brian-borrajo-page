@@ -130,6 +130,7 @@ Las variables de entorno viven en un archivo `.env` en la raíz del proyecto. **
 - [Diseño (Figma)](docs/design)
 - [Base de datos (UML)](docs/database)
 - [Script de creación de tablas](docs/database/init.sql)
+- Decisiones de arquitectura (ADR): los ADR adicionales se guardan en `docs/`.
 
 ## Convenciones de ramas y commits
 
