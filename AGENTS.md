@@ -47,7 +47,8 @@ npm run build
 
 # Entorno completo (requiere .env)
 cp .env.example .env
-docker compose up --build
+docker compose up --build --watch
+docker compose watch   # si el stack ya está arrancado
 docker compose logs -f
 docker compose down
 
@@ -56,6 +57,8 @@ curl http://localhost:5000/health
 curl http://localhost:5000/health/db
 docker compose exec db psql -U portfolio -d portfolio
 ```
+
+El stack se arranca con `--watch`: Compose sincroniza `src/frontend/`, `public/` e `index.html` (Vite recarga) y `src/backend/` (Flask se reinicia). Cambios en `package.json`, `package-lock.json`, `vite.config.js` o `requirements.txt` reconstruyen la imagen. No reintroduzcas bind mounts de código (`.:/app`, `./src/frontend:/app`, `./src/backend:/app`): Compose Watch ya hace la sincronización y evita problemas de `node_modules` entre Windows y Linux.
 
 ## 4. Convenciones de trabajo
 

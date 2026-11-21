@@ -83,8 +83,11 @@ cp .env.example .env
 ### Ejecución
 
 ```bash
-# Construir las imágenes y arrancar todos los servicios
-docker compose up --build
+# Construir las imágenes, arrancar los servicios y activar la recarga automática
+docker compose up --build --watch
+
+# Si el stack ya está arrancado, conectarse solo al modo watch
+docker compose watch
 
 # En otra terminal, seguir los logs
 docker compose logs -f
@@ -92,6 +95,8 @@ docker compose logs -f
 # Detener los servicios (añade -v para borrar también los datos de PostgreSQL)
 docker compose down
 ```
+
+Con `--watch`, los cambios en `src/frontend/`, `public/` e `index.html` se sincronizan y Vite recarga el navegador; los cambios en `src/backend/` se sincronizan y Flask reinicia el proceso. Los cambios en `package.json`, `package-lock.json`, `vite.config.js` o `requirements.txt` reconstruyen la imagen correspondiente.
 
 Una vez arrancado:
 
