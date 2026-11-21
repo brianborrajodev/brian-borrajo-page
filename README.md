@@ -40,17 +40,22 @@ Página web / portfolio personal donde cualquier persona puede explorar los proy
 ├── docs/
 │   ├── design/      # Diseño de Figma
 │   └── database/    # Diagrama UML de la base de datos y script init.sql
+├── public/          # Archivos estáticos de Vite
 ├── src/
-│   ├── frontend/    # Aplicación React (Vite)
-│   │   ├── Dockerfile
-│   │   └── package.json
+│   ├── frontend/    # Código React (main.jsx, App.jsx, assets/...)
 │   └── backend/     # API Flask
 │       ├── Dockerfile
 │       ├── app.py
 │       └── requirements.txt
+├── .dockerignore
 ├── .env.example     # Plantilla de variables de entorno
 ├── .env             # Variables de entorno (no se sube al repositorio)
+├── Dockerfile       # Imagen del frontend
 ├── docker-compose.yml
+├── eslint.config.js
+├── index.html
+├── package.json
+├── vite.config.js
 └── README.md
 ```
 
