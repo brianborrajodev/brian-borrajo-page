@@ -19,7 +19,7 @@ Instrucciones para agentes de código que trabajen en este repositorio (OpenCode
 │   └── ADR-*.md         # Decisiones de arquitectura (ADR adicionales)
 ├── public/              # Estáticos de Vite (/icons.svg, /favicon.svg)
 ├── src/
-│   ├── frontend/        # React: App.jsx, main.jsx, index.css, assets/, components/
+│   ├── frontend/        # React: App.jsx, main.jsx, assets/, components/, styles/
 │   └── backend/         # Flask: app.py, requirements.txt, Dockerfile
 ├── Dockerfile           # Imagen del frontend
 ├── docker-compose.yml
@@ -32,6 +32,7 @@ Reglas de ubicación:
 
 - Lo que pertenece a la raíz va en la raíz: `index.html`, `package.json`, `package-lock.json`, `vite.config.js`, `eslint.config.js`, `public/`, `Dockerfile` y `docker-compose.yml`.
 - El código React vive **directamente** en `src/frontend/`. No crees `src/frontend/src/`.
+- Todo CSS creado manualmente va en `src/frontend/styles/` y se importa desde ahí con rutas relativas (`./styles/...` o `../styles/...`). No dejes archivos `.css` sueltos en `src/frontend/` ni en `src/frontend/components/`.
 - La API Flask vive en `src/backend/`.
 - Los ADR adicionales se guardan directamente en `docs/` (p. ej. `docs/ADR-001-titulo.md`), no dentro de `docs/design/` ni `docs/database/`.
 - Si mueves un archivo, actualiza en el mismo cambio `README.md`, `index.html`, los Dockerfiles y `docker-compose.yml` según corresponda.

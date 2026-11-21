@@ -42,7 +42,7 @@ Página web / portfolio personal donde cualquier persona puede explorar los proy
 │   └── database/    # Diagrama UML de la base de datos y script init.sql
 ├── public/          # Archivos estáticos de Vite
 ├── src/
-│   ├── frontend/    # Código React (main.jsx, App.jsx, assets/, components/)
+│   ├── frontend/    # Código React (main.jsx, App.jsx, assets/, components/, styles/)
 │   └── backend/     # API Flask
 │       ├── Dockerfile
 │       ├── app.py
