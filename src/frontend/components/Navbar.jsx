@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import './Layout.css'
+import '../styles/Layout.css'
 
 export default function Navbar() {
   const [nightMode, setNightMode] = useState(true)
