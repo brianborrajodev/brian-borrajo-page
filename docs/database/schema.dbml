@@ -1,5 +1,5 @@
 Table users {
-  id ObjectId [pk]
+  id uuid [pk]
   provider varchar [not null, note: 'github | linkedin']
   provider_id varchar [not null]
   display_name varchar
@@ -13,7 +13,7 @@ Table users {
 }
 
 Table projects {
-  id ObjectId [pk]
+  id uuid [pk]
   title varchar [not null]
   description text
   repo_url varchar
@@ -22,9 +22,9 @@ Table projects {
 }
 
 Table likes {
-  id ObjectId [pk]
-  project_id ObjectId [not null]
-  user_id ObjectId [not null]
+  id uuid [pk]
+  project_id uuid [not null]
+  user_id uuid [not null]
   created_at timestamp [default: `now()`]
 
   indexes {
@@ -33,9 +33,9 @@ Table likes {
 }
 
 Table comments {
-  id ObjectId [pk]
-  project_id ObjectId [not null]
-  user_id ObjectId [not null]
+  id uuid [pk]
+  project_id uuid [not null]
+  user_id uuid [not null]
   text varchar [not null]
   created_at timestamp [default: `now()`]
 }
