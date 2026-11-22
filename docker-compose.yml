@@ -26,6 +26,7 @@ services:
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-portfolio}:${POSTGRES_PASSWORD:-portfolio}@db:5432/${POSTGRES_DB:-portfolio}
       POSTGRES_HOST: db
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
     ports:
       - "5000:5000"
     depends_on:

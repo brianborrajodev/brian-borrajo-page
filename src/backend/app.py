@@ -12,12 +12,9 @@ load_dotenv()
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-only-change-me")
 
-cors_origins = [
-    origin.strip()
-    for origin in os.environ.get("CORS_ORIGINS", "http://localhost:5173").split(",")
-    if origin.strip()
-]
-CORS(app, origins=cors_origins)
+# CORS: único origen permitido, el declarado en FRONTEND_URL (.env)
+frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:5173")
+CORS(app, resources={r"/*": {"origins": [frontend_url]}})
 
 
 def get_database_url() -> str:
