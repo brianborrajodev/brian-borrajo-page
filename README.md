@@ -125,10 +125,11 @@ Las variables de entorno viven en un archivo `.env` en la raíz del proyecto. **
 | `DATABASE_URL` | Cadena de conexión a PostgreSQL (opcional; tiene prioridad sobre las variables `POSTGRES_*` en la API) |
 | `SECRET_KEY` | Clave secreta de Flask |
 | `FLASK_DEBUG` | Activa el modo debug de Flask (`1` en desarrollo) |
-| `CORS_ORIGINS` | Orígenes permitidos por la API (por defecto `http://localhost:5173`) |
+| `FRONTEND_URL` | URL del frontend: único origen permitido por CORS en la API (p. ej. `http://localhost:5173`) |
 | `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | Credenciales OAuth de GitHub |
 | `LINKEDIN_CLIENT_ID` / `LINKEDIN_CLIENT_SECRET` | Credenciales OAuth de LinkedIn |
-| `VITE_API_URL` | URL de la API que usa el frontend (por defecto `http://localhost:5000`) |
+| `BACKEND_URL` | URL del servicio backend |
+| `VITE_API_URL` | URL de la API que consume el frontend; Vite solo expone al navegador variables `VITE_*` (por defecto `http://localhost:5000`) |
 
 ## Documentación
 

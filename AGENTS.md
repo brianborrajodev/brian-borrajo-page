@@ -81,12 +81,12 @@ El stack se arranca con `--watch`: Compose sincroniza `src/frontend/`, `public/`
 - React 19 + Vite 8 + Tailwind CSS v4 (mediante `@tailwindcss/vite`).
 - Punto de entrada: `index.html` → `/src/frontend/main.jsx`.
 - Estáticos servidos desde `public/` se referencian con ruta absoluta (`/icons.svg`); los importados desde `src/frontend/assets/` se referencian con `import`.
-- El frontend solo recibe variables de entorno que empiecen por `VITE_` (p. ej. `VITE_API_URL`).
+- En `.env` están `FRONTEND_URL` (origen permitido por CORS), `BACKEND_URL` (URL del servicio) y `VITE_API_URL` (URL que consume el frontend). Las tres se leen directamente desde `.env`; no hay mapeos entre ellas. Vite solo expone al navegador variables `VITE_*`.
 
 ## 7. Backend
 
 - Aplicación Flask única en `src/backend/app.py`; dependencias en `src/backend/requirements.txt`.
-- Endpoints actuales: `GET /health` y `GET /health/db`. CORS configurable con `CORS_ORIGINS`.
+- Endpoints actuales: `GET /health` y `GET /health/db`. CORS se configura con un único origen, `FRONTEND_URL` de `.env`; no existen `CORS_ORIGINS`, `VITE_ORIGINS` ni `VITE_FRONTEND_URL`.
 - Las credenciales OAuth de GitHub y LinkedIn son solo variables de entorno previstas; no implementes flujos falsos ni las hardcodees.
 
 ## 8. Antes de dar por terminada una tarea
