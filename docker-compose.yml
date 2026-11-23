@@ -11,7 +11,6 @@ services:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./docs/database/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-portfolio} -d ${POSTGRES_DB:-portfolio}"]
       interval: 5s
@@ -43,6 +42,35 @@ services:
             - requirements.txt
         - action: rebuild
           path: ./src/backend/requirements.txt
+
+  # Servicios de herramientas: no arrancan con `docker compose up`
+  migrate:
+    build: ./src/backend
+    profiles: ["tools"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-portfolio}:${POSTGRES_PASSWORD:-portfolio}@db:5432/${POSTGRES_DB:-portfolio}
+      POSTGRES_HOST: db
+    volumes:
+      - ./src/backend/migrations:/app/migrations
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: ["flask", "--app", "app:app", "db", "migrate"]
+
+  upgrade:
+    build: ./src/backend
+    profiles: ["tools"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-portfolio}:${POSTGRES_PASSWORD:-portfolio}@db:5432/${POSTGRES_DB:-portfolio}
+      POSTGRES_HOST: db
+    volumes:
+      - ./src/backend/migrations:/app/migrations
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: ["flask", "--app", "app:app", "db", "upgrade"]
 
   frontend:
     build:

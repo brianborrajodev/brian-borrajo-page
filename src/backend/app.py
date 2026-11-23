@@ -7,14 +7,10 @@ from dotenv import load_dotenv
 from flask import Flask, jsonify
 from flask_cors import CORS
 
+from extensions import db, migrate
+from models import Base  # noqa: F401 - registra todas las tablas en db.metadata
+
 load_dotenv()
-
-app = Flask(__name__)
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-only-change-me")
-
-# CORS: único origen permitido, el declarado en FRONTEND_URL (.env)
-frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:5173")
-CORS(app, resources={r"/*": {"origins": [frontend_url]}})
 
 
 def get_database_url() -> str:
@@ -28,6 +24,18 @@ def get_database_url() -> str:
     port = os.environ.get("POSTGRES_PORT", "5432")
     database = os.environ.get("POSTGRES_DB", "portfolio")
     return f"postgresql://{user}:{password}@{host}:{port}/{database}"
+
+
+app = Flask(__name__)
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-only-change-me")
+app.config["SQLALCHEMY_DATABASE_URI"] = get_database_url()
+
+db.init_app(app)
+migrate.init_app(app, db)
+
+# CORS: único origen permitido, el declarado en FRONTEND_URL (.env)
+frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:5173")
+CORS(app, resources={r"/*": {"origins": [frontend_url]}})
 
 
 @app.get("/health")

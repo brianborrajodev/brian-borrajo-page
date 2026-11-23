@@ -10,6 +10,7 @@ Página web / portfolio personal donde cualquier persona puede explorar los proy
 - [Stack tecnológico](#stack-tecnológico)
 - [Estructura del proyecto](#estructura-del-proyecto)
 - [Puesta en marcha](#puesta-en-marcha)
+- [Base de datos y migraciones](#base-de-datos-y-migraciones)
 - [Variables de entorno](#variables-de-entorno)
 - [Documentación](#documentación)
 - [Convenciones de ramas y commits](#convenciones-de-ramas-y-commits)
@@ -30,6 +31,7 @@ Página web / portfolio personal donde cualquier persona puede explorar los proy
 | Frontend | JavaScript, React, Vite |
 | Backend | Python, Flask |
 | Base de datos | PostgreSQL |
+| Modelado y migraciones | SQLAlchemy + Flask-SQLAlchemy + Flask-Migrate |
 | Entorno de desarrollo | Docker (Docker Compose) |
 | Autenticación | OAuth con LinkedIn y GitHub |
 
@@ -39,13 +41,17 @@ Página web / portfolio personal donde cualquier persona puede explorar los proy
 .
 ├── docs/
 │   ├── design/      # Diseño de Figma
-│   └── database/    # Diagrama UML de la base de datos y script init.sql
+│   ├── database/    # schema.dbml y schema.svg (documentación del modelo)
+│   └── ADR-*.md     # Decisiones de arquitectura
 ├── public/          # Archivos estáticos de Vite
 ├── src/
 │   ├── frontend/    # Código React (main.jsx, App.jsx, assets/, components/, styles/)
 │   └── backend/     # API Flask
 │       ├── Dockerfile
 │       ├── app.py
+│       ├── extensions.py  # SQLAlchemy y Flask-Migrate
+│       ├── models/        # Un .py por tabla (fuente de verdad del esquema)
+│       ├── migrations/    # Revisiones generadas por Flask-Migrate
 │       └── requirements.txt
 ├── .dockerignore
 ├── .env.example     # Plantilla de variables de entorno
@@ -92,7 +98,10 @@ docker compose watch
 # En otra terminal, seguir los logs
 docker compose logs -f
 
-# Detener los servicios (añade -v para borrar también los datos de PostgreSQL)
+# Crear las tablas la primera vez (o tras borrar el volumen)
+docker compose run --rm upgrade
+
+# Detener los servicios (sin -v para conservar los datos de PostgreSQL)
 docker compose down
 ```
 
@@ -104,14 +113,49 @@ Una vez arrancado:
 | --- | --- | --- | --- |
 | `frontend` | React + Vite | `5173` | Interfaz web (http://localhost:5173) |
 | `backend` | Python + Flask | `5000` | API (http://localhost:5000/health) |
-| `db` | PostgreSQL 16 | `5432` | Base de datos, con tablas creadas desde `docs/database/init.sql` |
+| `db` | PostgreSQL 16 | `5432` | Base de datos, con tablas creadas por Flask-Migrate desde los modelos |
 
-El backend espera a que PostgreSQL esté listo antes de arrancar. Los datos se guardan en el volumen `pgdata`, por lo que sobreviven a `docker compose down`. Para comprobar la conexión a la base de datos:
+El backend espera a que PostgreSQL esté listo antes de arrancar. Los datos se guardan en el volumen `pgdata`, por lo que sobreviven a `docker compose down`. Un volumen nuevo arranca sin tablas: aplica la migración inicial con `docker compose run --rm upgrade`. Para comprobar la conexión:
 
 ```bash
 curl http://localhost:5000/health/db
 # o
 docker compose exec db psql -U portfolio -d portfolio
+```
+
+## Base de datos y migraciones
+
+Los modelos de SQLAlchemy en `src/backend/models/` son la **única fuente de verdad** del esquema: un archivo `.py` por tabla, todos exportados desde `models/__init__.py`. Flask-Migrate (integrado en `src/backend/app.py` mediante `src/backend/extensions.py`) genera y aplica las migraciones con los comandos `flask db ...`. `docs/database/schema.dbml` y `docs/database/schema.svg` se mantienen solo como documentación visual, así que hay que actualizarlos cuando cambien los modelos. `init.sql` se eliminó: las tablas las crea únicamente la migración.
+
+> Flask-Migrate usa Alembic internamente: por eso `src/backend/migrations/` contiene un `alembic.ini` y un `env.py` generados por `flask db init`. No se gestionan a mano ni existe un `alembic.ini` en la raíz; las operaciones se hacen siempre con `flask db`.
+
+Los servicios `migrate` y `upgrade` tienen el perfil `tools`: no arrancan con `docker compose up`, solo se usan con `docker compose run`.
+
+| Acción | Comando |
+| --- | --- |
+| Generar una revisión tras editar los modelos | `docker compose run --rm migrate -m "descripción"` |
+| Crear las tablas / aplicar cambios pendientes | `docker compose run --rm upgrade` |
+| Comprobar que modelos y base de datos coinciden | `docker compose run --rm backend flask --app app:app db check` |
+| Ver el historial de revisiones | `docker compose run --rm backend flask --app app:app db history` |
+| Ver la revisión actual | `docker compose run --rm backend flask --app app:app db current` |
+| Revertir la última revisión | `docker compose run --rm backend flask --app app:app db downgrade -1` |
+| Eliminar todas las tablas (volver a `base`) | `docker compose run --rm backend flask --app app:app db downgrade base` |
+
+Flujo al cambiar el esquema:
+
+1. Editar el modelo correspondiente en `src/backend/models/` (o crear un archivo nuevo y exportarlo en `models/__init__.py`).
+2. Generar la revisión con `docker compose run --rm migrate -m "descripción"` y revisar el archivo creado en `src/backend/migrations/versions/` (ese directorio está montado desde el host, así que la revisión persiste).
+3. Aplicarla con `docker compose run --rm upgrade` y verificar con `docker compose run --rm backend flask --app app:app db check`.
+
+> `docker compose run` usa la imagen construida: ejecuta `docker compose build` si cambiaste `requirements.txt` o el `Dockerfile`. Los cambios en `src/backend/` ya se sincronizan con Compose Watch en los contenedores arrancados.
+
+Para empezar de cero (esto **borra también los datos**):
+
+```bash
+docker compose down
+docker volume rm mi-pagina_pgdata
+docker compose up -d db
+docker compose run --rm upgrade
 ```
 
 ## Variables de entorno
@@ -134,9 +178,10 @@ Las variables de entorno viven en un archivo `.env` en la raíz del proyecto. **
 ## Documentación
 
 - [Diseño (Figma)](docs/design)
-- [Base de datos (UML)](docs/database)
-- [Script de creación de tablas](docs/database/init.sql)
-- Decisiones de arquitectura (ADR): los ADR adicionales se guardan en `docs/`.
+- [Esquema de la base de datos (DBML)](docs/database/schema.dbml) y [diagrama](docs/database/schema.svg) (documentación)
+- [ADR-001: SQLAlchemy y Flask-Migrate](docs/ADR-001-sqlalchemy-flask-migrate.md)
+- Modelos y migraciones: `src/backend/models/` y `src/backend/migrations/`.
+- Los ADR adicionales se guardan directamente en `docs/`.
 
 ## Convenciones de ramas y commits
 

@@ -15,12 +15,12 @@ Instrucciones para agentes de código que trabajen en este repositorio (OpenCode
 .
 ├── docs/
 │   ├── design/          # Diseño de Figma
-│   ├── database/        # schema.dbml (UML) + init.sql (creación real)
-│   └── ADR-*.md         # Decisiones de arquitectura (ADR adicionales)
+│   ├── database/        # schema.dbml + schema.svg (documentación del modelo)
+│   └── ADR-*.md         # Decisiones de arquitectura (p. ej. ADR-001)
 ├── public/              # Estáticos de Vite (/icons.svg, /favicon.svg)
 ├── src/
 │   ├── frontend/        # React: App.jsx, main.jsx, assets/, components/, styles/
-│   └── backend/         # Flask: app.py, requirements.txt, Dockerfile
+│   └── backend/         # Flask: app.py, extensions.py, models/, migrations/, requirements.txt, Dockerfile
 ├── Dockerfile           # Imagen del frontend
 ├── docker-compose.yml
 ├── .env.example
@@ -57,9 +57,14 @@ docker compose down
 curl http://localhost:5000/health
 curl http://localhost:5000/health/db
 docker compose exec db psql -U portfolio -d portfolio
+
+# Migraciones (comandos cortos; servicios con perfil "tools")
+docker compose run --rm migrate -m "descripcion"
+docker compose run --rm upgrade
+docker compose run --rm backend flask --app app:app db check
 ```
 
-El stack se arranca con `--watch`: Compose sincroniza `src/frontend/`, `public/` e `index.html` (Vite recarga) y `src/backend/` (Flask se reinicia). Cambios en `package.json`, `package-lock.json`, `vite.config.js` o `requirements.txt` reconstruyen la imagen. No reintroduzcas bind mounts de código (`.:/app`, `./src/frontend:/app`, `./src/backend:/app`): Compose Watch ya hace la sincronización y evita problemas de `node_modules` entre Windows y Linux.
+El stack se arranca con `--watch`: Compose sincroniza `src/frontend/`, `public/` e `index.html` (Vite recarga) y `src/backend/` (Flask se reinicia). Cambios en `package.json`, `package-lock.json`, `vite.config.js` o `requirements.txt` reconstruyen la imagen. No reintroduzcas bind mounts de código (`.:/app`, `./src/frontend:/app`, `./src/backend:/app`): Compose Watch ya hace la sincronización y evita problemas de `node_modules` entre Windows y Linux. La única excepción es `./src/backend/migrations:/app/migrations` en los servicios `migrate` y `upgrade`, para que las revisiones generadas persistan en el host.
 
 ## 4. Convenciones de trabajo
 
@@ -72,8 +77,12 @@ El stack se arranca con `--watch`: Compose sincroniza `src/frontend/`, `public/`
 ## 5. Base de datos
 
 - PostgreSQL 16 en el servicio `db`; datos persistentes en el volumen `pgdata`.
-- `docs/database/schema.dbml` es la documentación del modelo y `docs/database/init.sql` la fuente de las tablas reales. **Mantén ambos sincronizados**.
-- `init.sql` solo se ejecuta al crear el volumen por primera vez. Todavía no hay sistema de migraciones: si hay que alterar una tabla con datos existentes, propón una migración antes de aplicar cambios destructivos.
+- Los modelos SQLAlchemy en `src/backend/models/` son la **única fuente de verdad** del esquema: un `.py` por tabla, exportados en `models/__init__.py`. `docs/database/schema.dbml` y `schema.svg` se conservan solo como documentación: al cambiar los modelos, actualízalos también para que no queden desfasados. `init.sql` sí se eliminó; no lo reintroduzcas.
+- Flask-Migrate se inicializa en `src/backend/extensions.py` y se registra en `app.py` con `SQLALCHEMY_DATABASE_URI` (la misma `DATABASE_URL` o `POSTGRES_*`). El repositorio de revisiones es `src/backend/migrations/`, generado por `flask db init`; Flask-Migrate usa Alembic por dentro, así que ese `alembic.ini` no se gestiona a mano.
+- Un volumen nuevo arranca sin tablas: aplica `docker compose run --rm upgrade`.
+- Para cambios de esquema: editar modelos → `docker compose run --rm migrate -m "descripción"` → revisar la revisión → `docker compose run --rm upgrade` → `docker compose run --rm backend flask --app app:app db check`. Propón una migración antes de cualquier cambio destructivo con datos existentes.
+- Los servicios `migrate` y `upgrade` usan el perfil `tools` y montan `./src/backend/migrations:/app/migrations`; no arrancan con `docker compose up`.
+- `docker compose run` usa la imagen construida: reconstruye el backend si cambian dependencias o el `Dockerfile`.
 - La API construye `DATABASE_URL` desde `POSTGRES_*` si no se define la variable; usa `psycopg` (v3).
 
 ## 6. Frontend
@@ -85,7 +94,7 @@ El stack se arranca con `--watch`: Compose sincroniza `src/frontend/`, `public/`
 
 ## 7. Backend
 
-- Aplicación Flask única en `src/backend/app.py`; dependencias en `src/backend/requirements.txt`.
+- Aplicación Flask única en `src/backend/app.py`; dependencias en `src/backend/requirements.txt` (Flask, psycopg, SQLAlchemy, Flask-SQLAlchemy y Flask-Migrate entre otras).
 - Endpoints actuales: `GET /health` y `GET /health/db`. CORS se configura con un único origen, `FRONTEND_URL` de `.env`; no existen `CORS_ORIGINS`, `VITE_ORIGINS` ni `VITE_FRONTEND_URL`.
 - Las credenciales OAuth de GitHub y LinkedIn son solo variables de entorno previstas; no implementes flujos falsos ni las hardcodees.
 
@@ -94,5 +103,6 @@ El stack se arranca con `--watch`: Compose sincroniza `src/frontend/`, `public/`
 - [ ] `npm run lint` y `npm run build` pasan si se tocó el frontend.
 - [ ] `docker compose config --quiet` pasa si se tocó Compose (con `.env` presente).
 - [ ] `docker compose build` pasa si se cambiaron Dockerfiles o dependencias.
+- [ ] `flask db check` pasa si se tocó el esquema, la revisión generada está en `src/backend/migrations/versions/` y `docs/database/schema.dbml` sigue coincidiendo con los modelos.
 - [ ] `README.md` y este archivo siguen reflejando la estructura y las variables reales.
 - [ ] `git status` no muestra archivos generados ni `.env` preparados para commit.
