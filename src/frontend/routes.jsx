@@ -1,11 +1,12 @@
 import Home from './pages/Home.jsx'
 import Projects from './pages/Projects.jsx'
 import SectionPage from './pages/SectionPage.jsx'
+import Socials from './pages/Socials.jsx'
 
 const routes = [
   { path: '/home', element: <Home /> },
   { path: '/proyectos', element: <Projects /> },
-  { path: '/redes', element: <SectionPage title="Mis redes" /> },
+  { path: '/redes', element: <Socials /> },
   {
     path: '/contacto',
     element: (
