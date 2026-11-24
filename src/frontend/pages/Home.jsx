@@ -53,15 +53,8 @@ const destinations = [
     href: '/proyectos',
   },
   {
-    id: 'redes',
-    number: '02 / CONECTAR',
-    title: 'Mis redes',
-    description: 'Mi lado más allá del editor.',
-    href: '/redes',
-  },
-  {
     id: 'contacto',
-    number: '03 / CONVERSAR',
+    number: '02 / CONVERSAR',
     title: 'Contacto',
     description: '¿Construimos algo juntos?',
     href: '/contacto',
@@ -79,7 +72,7 @@ function Home() {
         <div className="flex flex-1 flex-col items-center justify-center pb-8 pt-12 text-center sm:pb-14">
           <div className="flex w-full flex-col items-center px-5 py-4 sm:px-12 sm:py-6">
             <p className="mb-5 text-xs leading-6 tracking-wide text-[#53bfff] sm:text-sm">
-              <span className="text-yellow-200">print</span> ("HOLA, MUNDO")
+              <span className="text-yellow-200">print</span> ("BIENVENID@ A MI PORTFOLIO")
             </p>
             <h1 className="mx-auto w-fit max-w-full bg-neutral-700/75 px-3 py-1 font-arcade text-2xl font-normal leading-relaxed text-[#e8efff] [text-shadow:2px_2px_0_#146694,0_0_6px_#ffffffcc,0_0_16px_#ffffff80] sm:text-4xl lg:text-5xl 2xl:text-[64px]">
               <TerminalName />
@@ -104,12 +97,12 @@ function Home() {
           </div>
         </div>
 
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-2 text-[10px] leading-5 tracking-wide text-[#c1cce0] sm:text-xs">
+        <div className="mx-4 mb-3 flex flex-wrap items-center justify-between gap-2 text-[10px] leading-5 tracking-wide text-[#c1cce0] sm:mx-10 sm:text-xs">
 
-          <p>[ 01 – 03 ]</p>
+          <p>[ 01 – 02 ]</p>
         </div>
 
-        <nav aria-label="Explora el portfolio" className="grid gap-4 md:grid-cols-3">
+        <nav aria-label="Explora el portfolio" className="mx-4 grid w-auto gap-4 sm:mx-10 md:grid-cols-2">
           {destinations.map((destination) => (
             <a
               key={destination.number}

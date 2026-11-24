@@ -25,7 +25,6 @@ function PixelSun() {
 
 function Navbar() {
   const [nightMode, setNightMode] = useState(true)
-  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     document.documentElement.classList.toggle('night-mode', nightMode)
@@ -37,7 +36,7 @@ function Navbar() {
         aria-label="Navegación principal"
         className="flex w-full flex-wrap items-center justify-between gap-y-3 lg:grid lg:grid-cols-[1fr_auto_1fr]"
       >
-        <a href="/home" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 md:gap-4 lg:justify-self-start" aria-label="Portfolio.exe, inicio">
+        <a href="/home" className="flex items-center gap-2 md:gap-4 lg:justify-self-start" aria-label="Portfolio.exe, inicio">
           <svg aria-hidden="true" viewBox="0 0 20 16" className="h-6 w-[30px] shrink-0 text-[#53bfff]" fill="currentColor" shapeRendering="crispEdges">
             <path fillRule="evenodd" d="M0 0h20v16H0z M2 4v10h16V4z" />
             <path d="M7 5h2v1h2v1h2v1h2v2h-2v1h-2v1H9v1H7z" />
@@ -47,9 +46,9 @@ function Navbar() {
           </span>
         </a>
 
-        <div id="navbar-links" className={`${menuOpen ? 'grid' : 'hidden'} order-last w-full grid-cols-2 gap-1 font-mono text-xs md:order-none md:ml-auto md:mr-7 md:flex md:w-auto md:text-[11px] lg:mx-0`}>
+        <div id="navbar-links" className="order-last flex w-full flex-nowrap justify-between gap-1 pt-2 font-mono text-[9px] sm:text-[10px] md:order-none md:ml-auto md:mr-7 md:w-auto md:justify-center md:gap-1.5 md:pt-0 md:text-[11px] lg:mx-0">
           {routes.map(({ path }) => (
-            <a key={path} href={path} onClick={() => setMenuOpen(false)} className="border border-[#287ec0] px-3 py-3 text-[#65c5ff] hover:bg-[#0b2a4d] md:py-2">
+            <a key={path} href={path} className="min-w-0 flex-1 border border-[#287ec0] px-1 py-2 text-center text-[#65c5ff] hover:bg-[#0b2a4d] sm:px-2 md:flex-none md:px-3">
               {path}
             </a>
           ))}
@@ -85,11 +84,6 @@ function Navbar() {
             <span className="hidden w-32 text-right text-[#aeb8ca] sm:inline-block">
               MODO {nightMode ? 'NOCTURNO' : 'DIURNO'}
             </span>
-            <button type="button" aria-controls="navbar-links" aria-expanded={menuOpen} aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'} onClick={() => setMenuOpen(!menuOpen)} className="grid size-11 place-items-center border border-[#28629b] bg-[#07152e] text-[#78cfff] md:hidden">
-              <svg aria-hidden="true" viewBox="0 0 16 16" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" shapeRendering="crispEdges">
-                <path d={menuOpen ? 'M3 3l10 10M13 3L3 13' : 'M1 3h14M1 8h14M1 13h14'} />
-              </svg>
-            </button>
           </div>
       </nav>
     </header>

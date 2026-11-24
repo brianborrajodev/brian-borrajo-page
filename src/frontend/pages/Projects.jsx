@@ -49,7 +49,18 @@ function ProjectCard({ project, visible }) {
         </span>
       </button>
       <dialog ref={dialog} aria-labelledby={`${project.id}-title`} className="fixed inset-0 m-auto max-h-[90dvh] w-[min(92vw,40rem)] overflow-y-auto border border-sky-500 bg-[#081526] p-5 text-slate-100 backdrop:bg-black/80 sm:p-8">
-        <form method="dialog" className="mb-4 flex justify-end"><button className="cursor-pointer border border-sky-600 px-3 py-2 text-sm text-sky-200">Cerrar ×</button></form>
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          {project.codePublic ? (
+            <a href={project.codeUrl} target="_blank" rel="noreferrer" className="border border-cyan-700 px-3 py-2 font-mono text-xs text-cyan-200 hover:bg-[#0b2a4d]">
+              <span aria-hidden="true" className="mr-2 font-bold">&lt;/&gt;</span>Ver código público
+            </a>
+          ) : (
+            <button type="button" disabled className="cursor-not-allowed border border-slate-700 px-3 py-2 font-mono text-xs text-slate-400">
+              <span aria-hidden="true" className="mr-2 font-bold">&lt;/&gt;</span>Código privado
+            </button>
+          )}
+          <form method="dialog"><button className="cursor-pointer border border-sky-600 px-3 py-2 text-sm text-sky-200">Cerrar ×</button></form>
+        </div>
         <p className="font-mono text-xs uppercase text-cyan-300">{project.type}</p>
         <h2 id={`${project.id}-title`} className="my-4 font-arcade text-lg">{project.title}</h2>
         <img src={image} alt={project.alt} className="mb-4 max-h-64 w-full object-contain" />
@@ -82,8 +93,8 @@ export default function Projects() {
     || projects.some((project) => project.platform === activeFilter)
 
   return (
-    <main className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-10">
-      <h1 className="font-arcade text-2xl [-webkit-text-stroke:2px_black] [paint-order:stroke_fill] sm:text-4xl">
+    <main className="mx-auto w-full max-w-6xl px-3 py-12 sm:px-10">
+      <h1 style={{ fontSize: 'clamp(1.25rem, 7vw, 2.25rem)', whiteSpace: 'nowrap' }} className="font-arcade tracking-[-0.15em] [-webkit-text-stroke:2px_black] [paint-order:stroke_fill]">
         <span aria-hidden="true" style={{ color: '#569cd6' }}>{'<h2> '}</span>
         <span style={{ color: '#ce9178' }}>Mis proyectos</span>
         <span aria-hidden="true" style={{ color: '#569cd6' }}>{' </h2>'}</span>
