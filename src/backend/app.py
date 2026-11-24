@@ -8,7 +8,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 
 from extensions import db, migrate
-from models import Base  # noqa: F401 - registra todas las tablas en db.metadata
+from models import Comment, Like, Project, User  # noqa: F401 - registra las tablas
 
 load_dotenv()
 

@@ -9,8 +9,8 @@ El esquema de PostgreSQL estaba definido dos veces: `docs/database/init.sql` cre
 
 ## Decisión
 
-- Los modelos de SQLAlchemy en `src/backend/models/` son la **única fuente de verdad**: un archivo `.py` por tabla, todos exportados desde `models/__init__.py`.
-- `src/backend/extensions.py` crea la instancia de SQLAlchemy sobre esa base declarativa y registra Flask-Migrate en la aplicación Flask.
+- Los modelos de SQLAlchemy en `src/backend/models/` son la **única fuente de verdad**: un archivo `.py` por tabla, todos heredan de `db.Model` y se exportan desde `models/__init__.py`.
+- `src/backend/extensions.py` crea la instancia de SQLAlchemy con la convención de nombres de restricciones y registra Flask-Migrate en la aplicación Flask.
 - Las migraciones se gestionan con la CLI de Flask-Migrate (`flask db init`, `flask db migrate`, `flask db upgrade`, ...). Se eliminó toda la configuración independiente de Alembic: no hay `alembic.ini` en la raíz ni se invoca el comando `alembic` directamente.
 - `src/backend/migrations/` es el repositorio generado por `flask db init`; Flask-Migrate usa Alembic internamente, así que ese directorio contiene un `alembic.ini` y un `env.py` propios que no se editan a mano.
 - Se elimina `docs/database/init.sql` y se retira su montaje de `docker-compose.yml`. El volumen existente se recrea para que las tablas antiguas no convivan con las creadas por la migración inicial.

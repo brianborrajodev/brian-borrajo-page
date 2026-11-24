@@ -9,14 +9,14 @@ from sqlalchemy import DateTime, ForeignKey, UniqueConstraint, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import Base
+from extensions import db
 
 if TYPE_CHECKING:
     from .project import Project
     from .user import User
 
 
-class Like(Base):
+class Like(db.Model):
     """Valoración de un proyecto por parte de un usuario."""
 
     __tablename__ = "likes"
