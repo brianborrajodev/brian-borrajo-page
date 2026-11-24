@@ -1,6 +1,6 @@
 # Brian Borrajo Page
 
-Página web / portfolio personal donde cualquier persona puede explorar los proyectos en los que he participado y dejar su opinión: valorar proyectos, y comentar si le gustó trabajar conmigo o qué le parece mi forma de programar.
+Portfolio personal de Brian Borrajo. El MVP permite conocerme, explorar mis proyectos y redes, y encontrar mis datos de contacto. Actualmente es una web informativa: no tiene funciones de interacción para visitantes ni conexión de sus páginas a una base de datos.
 
 ![Estado](https://img.shields.io/badge/estado-en%20desarrollo-yellow)
 
@@ -19,21 +19,31 @@ Página web / portfolio personal donde cualquier persona puede explorar los proy
 
 ## Funcionalidades (MVP)
 
-- [x] Página de inicio (Home) respetando el diseño documentado en `docs/design`.
+El MVP actual es un portfolio sin cuentas de usuario, likes, comentarios ni persistencia de datos. Se puede navegar entre sus páginas y abrir las fichas de los proyectos.
+
+- [x] Home con diseño arcade y adaptación a móvil y escritorio.
+- [x] Página de proyectos con filtros y fichas en modal.
+- [x] Página de redes profesionales.
+- [x] Página de contacto directo y profesional.
+- [x] Navegación entre páginas sin recarga y cambio entre tema diurno/nocturno.
+
+### Funcionalidades planteadas para el futuro
+
 - [ ] Inicio de sesión con **LinkedIn** y **GitHub**.
-- [ ] Valoración de proyectos por parte de los usuarios autenticados.
-- [ ] Sección de comentarios sobre mí (experiencia trabajando conmigo, forma de programar, etc.).
+- [ ] Likes o valoraciones de proyectos por parte de usuarios autenticados.
+- [ ] Comentarios sobre la experiencia de trabajar conmigo y mi forma de programar.
+- [ ] Persistencia de usuarios, likes y comentarios en PostgreSQL, mediante la API Flask.
 
 ## Stack tecnológico
 
 | Capa | Tecnología |
 | --- | --- |
 | Frontend | JavaScript, React, Vite |
-| Backend | Python, Flask |
-| Base de datos | PostgreSQL |
-| Modelado y migraciones | SQLAlchemy + Flask-SQLAlchemy + Flask-Migrate |
+| Backend | Python y Flask (actualmente solo ofrece endpoints de salud) |
+| Base de datos | PostgreSQL (infraestructura preparada; el MVP no la usa para el contenido del portfolio) |
+| Modelado y migraciones | SQLAlchemy + Flask-SQLAlchemy + Flask-Migrate (base para funcionalidades futuras) |
 | Entorno de desarrollo | Docker (Docker Compose) |
-| Autenticación | OAuth con LinkedIn y GitHub |
+| Autenticación | OAuth con LinkedIn y GitHub (planificada; aún no implementada) |
 
 ## Estructura del proyecto
 
