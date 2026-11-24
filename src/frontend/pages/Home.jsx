@@ -111,7 +111,7 @@ function Home() {
         <div className="flex flex-1 flex-col items-center justify-start pb-8 pt-12 text-center sm:pb-14">
           <div className="flex w-full flex-col items-center px-5 py-4 sm:px-12 sm:py-6">
             <p className="mb-5 text-xs leading-6 tracking-wide text-[#53bfff] day:text-sky-800 sm:text-sm">
-              <span className="text-yellow-200 day:text-amber-700">print</span> ("HOLA MUNDO")
+              <span className="text-yellow-200 day:text-amber-700">print</span> ("HELLO, WORLD!")
             </p>
             <h1 style={{ fontSize: 'clamp(1.25rem, 3vw, 2.75rem)', whiteSpace: 'nowrap' }} className="theme-home-name mx-auto w-fit max-w-full bg-neutral-700/75 px-3 py-1 font-arcade font-normal leading-relaxed text-[#e8efff] [text-shadow:2px_2px_0_#146694,0_0_6px_#ffffffcc,0_0_16px_#ffffff80]">
               <TerminalName />
