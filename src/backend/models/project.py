@@ -9,14 +9,14 @@ from sqlalchemy import DateTime, Integer, String, Text, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import Base
+from extensions import db
 
 if TYPE_CHECKING:
     from .comment import Comment
     from .like import Like
 
 
-class Project(Base):
+class Project(db.Model):
     """Proyecto mostrado en el portfolio."""
 
     __tablename__ = "projects"

@@ -19,7 +19,7 @@ Página web / portfolio personal donde cualquier persona puede explorar los proy
 
 ## Funcionalidades (MVP)
 
-- [ ] Página de inicio (Home) respetando el diseño documentado en `docs/design`.
+- [x] Página de inicio (Home) respetando el diseño documentado en `docs/design`.
 - [ ] Inicio de sesión con **LinkedIn** y **GitHub**.
 - [ ] Valoración de proyectos por parte de los usuarios autenticados.
 - [ ] Sección de comentarios sobre mí (experiencia trabajando conmigo, forma de programar, etc.).
@@ -125,7 +125,7 @@ docker compose exec db psql -U portfolio -d portfolio
 
 ## Base de datos y migraciones
 
-Los modelos de SQLAlchemy en `src/backend/models/` son la **única fuente de verdad** del esquema: un archivo `.py` por tabla, todos exportados desde `models/__init__.py`. Flask-Migrate (integrado en `src/backend/app.py` mediante `src/backend/extensions.py`) genera y aplica las migraciones con los comandos `flask db ...`. `docs/database/schema.dbml` y `docs/database/schema.svg` se mantienen solo como documentación visual, así que hay que actualizarlos cuando cambien los modelos. `init.sql` se eliminó: las tablas las crea únicamente la migración.
+Los modelos de SQLAlchemy en `src/backend/models/` son la **única fuente de verdad** del esquema: un archivo `.py` por tabla, todos heredan de `db.Model` y se exportan desde `models/__init__.py`. Flask-Migrate (integrado en `src/backend/app.py` mediante `src/backend/extensions.py`, donde también está la convención de nombres de restricciones) genera y aplica las migraciones con los comandos `flask db ...`. `docs/database/schema.dbml` y `docs/database/schema.svg` se mantienen solo como documentación visual, así que hay que actualizarlos cuando cambien los modelos. `init.sql` se eliminó: las tablas las crea únicamente la migración.
 
 > Flask-Migrate usa Alembic internamente: por eso `src/backend/migrations/` contiene un `alembic.ini` y un `env.py` generados por `flask db init`. No se gestionan a mano ni existe un `alembic.ini` en la raíz; las operaciones se hacen siempre con `flask db`.
 

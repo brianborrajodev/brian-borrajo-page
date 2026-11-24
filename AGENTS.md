@@ -32,7 +32,7 @@ Reglas de ubicación:
 
 - Lo que pertenece a la raíz va en la raíz: `index.html`, `package.json`, `package-lock.json`, `vite.config.js`, `eslint.config.js`, `public/`, `Dockerfile` y `docker-compose.yml`.
 - El código React vive **directamente** en `src/frontend/`. No crees `src/frontend/src/`.
-- Todo CSS creado manualmente va en `src/frontend/styles/` y se importa desde ahí con rutas relativas (`./styles/...` o `../styles/...`). No dejes archivos `.css` sueltos en `src/frontend/` ni en `src/frontend/components/`.
+- Los estilos se escriben con utilidades de Tailwind directamente en los componentes. El único archivo CSS es `src/frontend/styles/index.css` (entrada de Tailwind: `@import`, `@custom-variant night` y `@theme`), importado desde `main.jsx`. No crees hojas de estilo por componente ni archivos `.css` sueltos en `src/frontend/` o `src/frontend/components/`.
 - La API Flask vive en `src/backend/`.
 - Los ADR adicionales se guardan directamente en `docs/` (p. ej. `docs/ADR-001-titulo.md`), no dentro de `docs/design/` ni `docs/database/`.
 - Si mueves un archivo, actualiza en el mismo cambio `README.md`, `index.html`, los Dockerfiles y `docker-compose.yml` según corresponda.
@@ -77,7 +77,7 @@ El stack se arranca con `--watch`: Compose sincroniza `src/frontend/`, `public/`
 ## 5. Base de datos
 
 - PostgreSQL 16 en el servicio `db`; datos persistentes en el volumen `pgdata`.
-- Los modelos SQLAlchemy en `src/backend/models/` son la **única fuente de verdad** del esquema: un `.py` por tabla, exportados en `models/__init__.py`. `docs/database/schema.dbml` y `schema.svg` se conservan solo como documentación: al cambiar los modelos, actualízalos también para que no queden desfasados. `init.sql` sí se eliminó; no lo reintroduzcas.
+- Los modelos SQLAlchemy en `src/backend/models/` son la **única fuente de verdad** del esquema: un `.py` por tabla que hereda de `db.Model`, exportados en `models/__init__.py`. La convención de nombres de restricciones está en `extensions.py`. `docs/database/schema.dbml` y `schema.svg` se conservan solo como documentación: al cambiar los modelos, actualízalos también para que no queden desfasados. `init.sql` sí se eliminó; no lo reintroduzcas.
 - Flask-Migrate se inicializa en `src/backend/extensions.py` y se registra en `app.py` con `SQLALCHEMY_DATABASE_URI` (la misma `DATABASE_URL` o `POSTGRES_*`). El repositorio de revisiones es `src/backend/migrations/`, generado por `flask db init`; Flask-Migrate usa Alembic por dentro, así que ese `alembic.ini` no se gestiona a mano.
 - Un volumen nuevo arranca sin tablas: aplica `docker compose run --rm upgrade`.
 - Para cambios de esquema: editar modelos → `docker compose run --rm migrate -m "descripción"` → revisar la revisión → `docker compose run --rm upgrade` → `docker compose run --rm backend flask --app app:app db check`. Propón una migración antes de cualquier cambio destructivo con datos existentes.

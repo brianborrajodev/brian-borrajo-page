@@ -9,14 +9,14 @@ from sqlalchemy import CheckConstraint, DateTime, String, UniqueConstraint, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import Base
+from extensions import db
 
 if TYPE_CHECKING:
     from .comment import Comment
     from .like import Like
 
 
-class User(Base):
+class User(db.Model):
     """Usuario autenticado mediante GitHub o LinkedIn."""
 
     __tablename__ = "users"

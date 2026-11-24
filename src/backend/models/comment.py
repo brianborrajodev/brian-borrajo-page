@@ -9,14 +9,14 @@ from sqlalchemy import DateTime, ForeignKey, Text, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import Base
+from extensions import db
 
 if TYPE_CHECKING:
     from .project import Project
     from .user import User
 
 
-class Comment(Base):
+class Comment(db.Model):
     """Comentario de un usuario sobre un proyecto."""
 
     __tablename__ = "comments"
