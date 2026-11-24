@@ -1,19 +1,13 @@
 import Home from './pages/Home.jsx'
 import Projects from './pages/Projects.jsx'
-import SectionPage from './pages/SectionPage.jsx'
-import Socials from './pages/Socials.jsx'
+import Contact from './pages/Contact.jsx'
 
 const routes = [
   { path: '/home', element: <Home /> },
   { path: '/proyectos', element: <Projects /> },
-  { path: '/redes', element: <Socials /> },
   {
     path: '/contacto',
-    element: (
-      <SectionPage title="Contacto">
-        <a className="text-cyan-300 underline" href="mailto:hola@brianborrajo.com">Escríbeme por correo</a>
-      </SectionPage>
-    ),
+    element: <Contact />,
   },
 ]
 
