@@ -22,5 +22,17 @@
     "alt": "Portada de SNS Lexdibri con el lema Tu salud, conectada y el acceso al portal.",
     "description": "Un portal que reúne servicios sanitarios, especialidades e información de salud en un único espacio. La portada da acceso al portal personal y destaca los apartados de diagnóstico, contacto y urgencias.",
     "stack": ["JavaScript (React)", "Python (Flask)", "MySQL", "CSS (Tailwind)"]
+  },
+  {
+    "id": "portfolio-personal",
+    "title": "Portfolio.exe",
+    "type": "Portfolio personal",
+    "platform": "web",
+    "image": "proyecto-3.jpeg",
+    "codePublic": null,
+    "codeUrl": null,
+    "alt": "Portfolio personal de Brian con estética arcade, volcanes pixel art y una presentación interactiva.",
+    "description": "Portfolio personal de estética arcade que presenta mi perfil, proyectos y formas de contacto. Incluye navegación entre páginas sin recarga, tema diurno y nocturno, una introducción animada estilo terminal y fichas de proyectos con sus tecnologías.",
+    "stack": ["JavaScript (React)", "Python (Flask)", "PostgreSQL", "CSS (Tailwind)"]
   }
 ]

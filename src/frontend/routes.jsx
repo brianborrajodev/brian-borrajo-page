@@ -5,10 +5,7 @@ import Contact from './pages/Contact.jsx'
 const routes = [
   { path: '/home', element: <Home /> },
   { path: '/proyectos', element: <Projects /> },
-  {
-    path: '/contacto',
-    element: <Contact />,
-  },
+  { path: '/contacto', element: <Contact /> },
 ]
 
 export default routes

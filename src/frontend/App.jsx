@@ -1,12 +1,27 @@
+import { useEffect } from 'react'
+import { Link, Navigate, useLocation, useRoutes } from 'react-router-dom'
 import Layout from './layouts/Layout.jsx'
 import routes from './routes.jsx'
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    document.getElementById('app-scroll-container')?.scrollTo({ top: 0, left: 0 })
+  }, [pathname])
+
+  return null
+}
+
 function App() {
-  const path = window.location.pathname.replace(/\/+$/, '') || '/home'
-  const route = routes.find((entry) => entry.path === path)
+  const route = useRoutes([
+    { path: '/', element: <Navigate to="/home" replace /> },
+    ...routes,
+  ])
   return (
     <Layout>
-      {route?.element ?? <main className="p-8">Página no encontrada. <a href="/home" className="underline">Ir al inicio</a></main>}
+      <ScrollToTop />
+      {route ?? <main className="p-8">Página no encontrada. <Link to="/home" className="underline">Ir al inicio</Link></main>}
     </Layout>
   )
 }

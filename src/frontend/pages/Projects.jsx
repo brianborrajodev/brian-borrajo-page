@@ -30,33 +30,33 @@ function ProjectCard({ project, visible }) {
   const preview = truncated ? `${project.description.slice(0, previewLimit).replace(/\s+\S*$/, '')}…` : project.description
   return (
     <article aria-hidden={!visible} className={visible ? '' : 'pointer-events-none invisible select-none'}>
-      <button type="button" aria-haspopup="dialog" aria-label={`Ver ficha de ${project.title}`} onClick={() => dialog.current.showModal()} className="group h-full w-full cursor-pointer border border-[#273a58] bg-[#080f20] text-left transition-colors hover:border-[#287ec0] hover:bg-[#0b2a4d] focus-visible:outline-cyan-300">
+      <button type="button" aria-haspopup="dialog" aria-label={`Ver ficha de ${project.title}`} onClick={() => dialog.current.showModal()} className="theme-card group h-full w-full cursor-pointer border border-[#273a58] bg-[#080f20] text-left transition-colors hover:border-[#287ec0] hover:bg-[#0b2a4d] focus-visible:outline-cyan-300">
         <img src={image} alt={project.alt} className="aspect-video w-full object-cover" />
         <span className="block p-5">
-          <span className="font-mono text-xs uppercase text-cyan-300">{project.type}</span>
+          <span className="theme-card-type font-mono text-xs uppercase text-cyan-300">{project.type}</span>
           <span className="my-3 flex flex-wrap items-center gap-3">
             <span className="font-arcade text-base">{project.title}</span>
             <span className="flex flex-wrap gap-1.5">
               {project.stack.map((tech) => (
-                <span key={tech} className="border border-sky-800/80 bg-[#07152e] px-2 py-1 font-mono text-[10px] text-sky-200">
+                <span key={tech} className="theme-card-stack border border-sky-800/80 bg-[#07152e] px-2 py-1 font-mono text-[10px] text-sky-200">
                   {tech}
                 </span>
               ))}
             </span>
           </span>
-          <span className="block text-slate-300">{preview}</span>
+          <span className="theme-card-description block text-slate-300">{preview}</span>
           {truncated && <span className="mt-4 block font-mono text-sky-300">Ver más...</span>}
         </span>
       </button>
-      <dialog ref={dialog} aria-labelledby={`${project.id}-title`} className="fixed inset-0 m-auto max-h-[90dvh] w-[min(92vw,40rem)] overflow-y-auto border border-sky-500 bg-[#081526] p-5 text-slate-100 backdrop:bg-black/80 sm:p-8">
+      <dialog ref={dialog} aria-labelledby={`${project.id}-title`} className="theme-dialog fixed inset-0 m-auto max-h-[90dvh] w-[min(92vw,40rem)] overflow-y-auto border border-sky-500 bg-[#081526] p-5 text-slate-100 backdrop:bg-black/80 sm:p-8">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          {project.codePublic ? (
-            <a href={project.codeUrl} target="_blank" rel="noreferrer" className="border border-cyan-700 px-3 py-2 font-mono text-xs text-cyan-200 hover:bg-[#0b2a4d]">
+          {project.codePublic === true ? (
+            <a href={project.codeUrl} target="_blank" rel="noreferrer" className="theme-dialog-code-link border border-cyan-700 px-3 py-2 font-mono text-xs text-cyan-200 hover:bg-[#0b2a4d]">
               <span aria-hidden="true" className="mr-2 font-bold">&lt;/&gt;</span>Ver código público
             </a>
           ) : (
             <button type="button" disabled className="cursor-not-allowed border border-slate-700 px-3 py-2 font-mono text-xs text-slate-400">
-              <span aria-hidden="true" className="mr-2 font-bold">&lt;/&gt;</span>Código privado
+              <span aria-hidden="true" className="mr-2 font-bold">&lt;/&gt;</span>{project.codePublic === false ? 'Código privado' : 'Enlace pendiente'}
             </button>
           )}
           <form method="dialog"><button className="cursor-pointer border border-sky-600 px-3 py-2 text-sm text-sky-200">Cerrar ×</button></form>
@@ -69,13 +69,13 @@ function ProjectCard({ project, visible }) {
           <p className="leading-7">{project.description}</p>
         </section>
         {project.stack.length > 0 && (
-          <section aria-labelledby={`${project.id}-stack`} className="mt-6 border border-[#3c4654] bg-[#1e1e1e] p-4">
+          <section aria-labelledby={`${project.id}-stack`} className="theme-dialog-stack-section mt-6 border border-[#3c4654] bg-[#1e1e1e] p-4">
             <h3 id={`${project.id}-stack`} className="mb-3 font-mono text-sm text-[#ce9178]">
               <span className="text-[#569cd6]">const</span> tecnologías =
             </h3>
             <ul className="grid grid-cols-2 gap-2 sm:grid-cols-4">
               {project.stack.map((tech) => (
-                <li key={tech} className="flex min-h-12 items-center justify-center break-words border border-[#3c4654] bg-[#252526] px-2 py-2 text-center font-mono text-xs text-[#9cdcfe]">
+                <li key={tech} className="theme-dialog-stack-item flex min-h-12 items-center justify-center break-words border border-[#3c4654] bg-[#252526] px-2 py-2 text-center font-mono text-xs text-[#9cdcfe]">
                   {tech}
                 </li>
               ))}
@@ -93,15 +93,15 @@ export default function Projects() {
     || projects.some((project) => project.platform === activeFilter)
 
   return (
-    <main className="mx-auto w-full max-w-6xl px-3 py-12 sm:px-10">
-      <h1 style={{ fontSize: 'clamp(1.25rem, 7vw, 2.25rem)', whiteSpace: 'nowrap' }} className="font-arcade tracking-[-0.15em] [-webkit-text-stroke:2px_black] [paint-order:stroke_fill]">
+    <main className="theme-page mx-auto w-full max-w-6xl px-3 py-12 sm:px-10">
+      <h1 style={{ fontSize: 'clamp(0.7rem, 4.1vw, 2.25rem)', whiteSpace: 'nowrap' }} className="mx-auto text-center font-arcade tracking-[-0.15em] [-webkit-text-stroke:2px_black] [paint-order:stroke_fill]">
         <span aria-hidden="true" style={{ color: '#569cd6' }}>{'<h2> '}</span>
         <span style={{ color: '#ce9178' }}>Mis proyectos</span>
         <span aria-hidden="true" style={{ color: '#569cd6' }}>{' </h2>'}</span>
       </h1>
-      <p className="mt-5 text-lg text-slate-300">Húsmea entre los proyectos que he participado.</p>
+      <p style={{ fontSize: 'clamp(0.55rem, 3.2vw, 1.125rem)' }} className="theme-page-muted mt-5 text-center text-slate-300">Húsmea entre los proyectos que he participado.</p>
       <div className="mt-7 flex flex-col items-center">
-        <p className="font-arcade text-xs uppercase tracking-wide text-cyan-200">Filtros</p>
+        <p className="theme-filter-label font-arcade text-xs uppercase tracking-wide text-cyan-200">Filtros</p>
         <div aria-label="Filtrar proyectos por plataforma" className="mt-3 flex flex-wrap justify-center gap-2">
           {filters.map((filter) => (
             <button
@@ -109,7 +109,8 @@ export default function Projects() {
               type="button"
               aria-pressed={activeFilter === filter.id}
               onClick={() => setActiveFilter(filter.id)}
-              className={`inline-flex h-12 w-36 cursor-pointer items-center justify-center gap-2 border px-3 font-mono text-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 ${
+              data-active={activeFilter === filter.id}
+              className={`theme-filter inline-flex h-12 w-36 cursor-pointer items-center justify-center gap-2 border px-3 font-mono text-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 ${
                 activeFilter === filter.id
                   ? 'border-cyan-300 bg-[#0b2a4d] text-cyan-200'
                   : 'border-[#273a58] bg-[#080f20] text-slate-300 hover:border-[#287ec0] hover:bg-[#0b2a4d]'
@@ -132,7 +133,7 @@ export default function Projects() {
           ))}
         </div>
         {!hasVisibleProjects && (
-          <div role="status" className="absolute inset-x-0 top-0 border border-[#273a58] bg-[#080f20] p-5 text-slate-300">
+          <div role="status" className="theme-empty-state absolute inset-x-0 top-0 border border-[#273a58] bg-[#080f20] p-5 text-slate-300">
             Todavía no hay proyectos en esta categoría.
           </div>
         )}

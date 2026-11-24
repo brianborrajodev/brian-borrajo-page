@@ -29,6 +29,7 @@ body {
 
 /* La activa el navbar añadiendo .night-mode a <html>. */
 @custom-variant night (&:where(.night-mode, .night-mode *));
+@custom-variant day (&:where(.day-mode, .day-mode *));
 
 @theme {
   --color-arcade-bar: #70c8ff;
@@ -51,4 +52,211 @@ body {
   --color-home-glow-blue-night: rgba(5, 92, 207, 0.5);
   --color-home-glow-cyan: rgba(81, 206, 241, 0.2);
   --color-home-glow-cyan-night: rgba(33, 255, 255, 0.22);
+}
+
+/* Paleta explícita del tema diurno, activada por el interruptor del navbar. */
+html.day-mode .theme-layout {
+  color: #12243b;
+  background-color: #e8f3ff;
+}
+
+html.night-mode .theme-navbar,
+html.night-mode .theme-footer {
+  background-color: #143a89;
+}
+
+html.day-mode .theme-navbar,
+html.day-mode .theme-footer {
+  background-color: #70c8ff;
+}
+
+html.day-mode .theme-navbar-logo,
+html.day-mode .theme-navbar-mode,
+html.day-mode .theme-navbar-mark,
+html.day-mode .theme-footer-content {
+  color: #0c2342;
+}
+
+html.day-mode .theme-navbar a {
+  color: #123b5c;
+  border-color: #6f9fbe;
+}
+
+html.day-mode .theme-navbar a:hover {
+  color: #0c3150;
+  background-color: #b8e3ff;
+}
+
+html.day-mode .theme-navbar #navbar-links button {
+  color: #111827;
+  border-color: #111827;
+}
+
+html.day-mode .theme-navbar #navbar-links button:hover,
+html.day-mode .theme-navbar #navbar-links button[aria-current="page"] {
+  color: #111827;
+  background-color: #b8e3ff;
+}
+
+html.day-mode .theme-footer-content {
+  border-color: #1e4973;
+}
+
+html.day-mode .theme-home {
+  color: #10233e;
+}
+
+html.day-mode .theme-home-overlay {
+  background-color: rgb(255 255 255 / 55%);
+}
+
+html.day-mode .theme-home-name {
+  color: #10233e;
+  background-color: rgb(255 255 255 / 88%);
+  text-shadow: 2px 2px 0 #7dd3fc;
+}
+
+html.day-mode .theme-code-line {
+  background-color: rgb(255 255 255 / 88%);
+}
+
+html.day-mode .theme-code-line span {
+  color: #334155;
+}
+
+html.day-mode .theme-code-line .text-purple-300 { color: #7e22ce; }
+html.day-mode .theme-code-line .text-yellow-200 { color: #a16207; }
+html.day-mode .theme-code-line .text-sky-300 { color: #0369a1; }
+html.day-mode .theme-code-line .text-orange-300 { color: #c2410c; }
+
+html.day-mode .theme-home-card {
+  color: #10233e;
+  border-color: #46769f;
+  background-color: rgb(255 255 255 / 88%);
+}
+
+html.day-mode .theme-home-card:hover,
+html.day-mode .theme-home-card:focus-visible {
+  background-color: #d9efff;
+}
+
+html.day-mode .theme-home-card h2 {
+  color: #10233e;
+}
+
+html.day-mode .theme-home-card p,
+html.day-mode .theme-home-card div {
+  color: #334b65;
+}
+
+html.day-mode .theme-page {
+  color: #12243b;
+}
+
+html.day-mode .theme-page-muted {
+  color: #475569;
+}
+
+html.day-mode .theme-filter-label {
+  color: #1e3a5f;
+}
+
+html.day-mode .theme-name-variable {
+  color: #166534;
+}
+
+html.day-mode .theme-contact-subheading {
+  color: #166534;
+}
+
+html.day-mode .theme-card {
+  color: #12243b;
+  border-color: #89a9c5;
+  background-color: rgb(255 255 255 / 94%);
+}
+
+html.day-mode .theme-card:hover {
+  background-color: #e0f2ff;
+}
+
+html.day-mode .theme-card-type,
+html.day-mode .theme-card-stack {
+  color: #075985;
+  border-color: #a7c6df;
+  background-color: #eaf6ff;
+}
+
+html.day-mode .theme-card-description {
+  color: #334155;
+}
+
+html.day-mode .theme-filter {
+  color: #334155;
+  border-color: #9ab6cf;
+  background-color: #f8fbff;
+}
+
+html.day-mode .theme-filter:hover {
+  background-color: #dbeafe;
+}
+
+html.day-mode .theme-filter[data-active="true"] {
+  color: #123a5a;
+  border-color: #2676a8;
+  background-color: #c7e8ff;
+}
+
+html.day-mode .theme-card,
+html.day-mode .theme-contact-card {
+  color: #12243b;
+  border-color: #89a9c5;
+  background-color: rgb(255 255 255 / 92%);
+}
+
+html.day-mode .theme-card:hover,
+html.day-mode .theme-contact-card:hover {
+  background-color: #e0f2ff;
+}
+
+html.day-mode .theme-card-type,
+html.day-mode .theme-contact-value {
+  color: #075985;
+}
+
+html.day-mode .theme-dialog {
+  color: #12243b;
+  border-color: #46769f;
+  background-color: #f8fbff;
+}
+
+html.day-mode .theme-dialog button,
+html.day-mode .theme-dialog-code-link {
+  color: #075985;
+  border-color: #7aa5c5;
+}
+
+html.day-mode .theme-dialog-stack {
+  border-color: #a8bfd5;
+  background-color: #e8f0f7;
+}
+
+html.day-mode .theme-dialog-stack-item {
+  color: #164e70;
+  border-color: #abc2d7;
+  background-color: #fff;
+}
+
+html.day-mode .theme-empty-state {
+  color: #334155;
+  border-color: #a8bfd5;
+  background-color: #f8fbff;
+}
+
+html.day-mode .theme-contact-card svg {
+  color: #0369a1;
+}
+
+html.day-mode .theme-contact-card > span,
+html.day-mode .theme-contact-card .theme-contact-value {
+  color: #12243b;
 }
