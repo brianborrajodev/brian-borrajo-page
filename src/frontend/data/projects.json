@@ -2,35 +2,35 @@
   {
     "id": "rebusca-46",
     "title": "REBUSCA 46",
-    "type": "Restauración",
+    "type": "Plataforma web de pedidos, TPV y CRM",
     "platform": "web",
     "image": "proyecto-1.jpeg",
     "codePublic": false,
     "codeUrl": null,
     "alt": "Portada de ReBusca46 con una pizza recién servida y el botón Haz tu pedido.",
-    "description": "Una web de cocina italiana que reúne los menús, las ofertas y las ubicaciones de ReBusca46. Desde la portada puedes comenzar un pedido o buscar un local donde compartir una pizza.",
-    "stack": ["JavaScript (React)", "Python (Flask)", "PostgreSQL", "CSS (Bootstrap)"]
+    "description": "Plataforma web de pedidos para una cadena de restaurantes, integrada con un sistema TPV y un CRM. Permite consultar la oferta de los restaurantes y gestionar el flujo de pedidos junto con las operaciones del negocio.",
+    "stack": ["JavaScript (React)", "Python (Flask)", "MySQL", "CSS (Tailwind)"]
   },
   {
     "id": "sns-lexdibri",
     "title": "SNS LEXDIBRI",
-    "type": "Portal sanitario",
+    "type": "Sistema Nacional de Salud",
     "platform": "web",
     "image": "proyecto-2.jpeg",
     "codePublic": true,
     "codeUrl": "https://github.com/4GeeksAcademy/SistemaNacionalDeSaludLexdibri",
     "alt": "Portada de SNS Lexdibri con el lema Tu salud, conectada y el acceso al portal.",
-    "description": "Un portal que reúne servicios sanitarios, especialidades e información de salud en un único espacio. La portada da acceso al portal personal y destaca los apartados de diagnóstico, contacto y urgencias.",
-    "stack": ["JavaScript (React)", "Python (Flask)", "MySQL", "CSS (Tailwind)"]
+    "description": "Sistema Nacional de Salud creado desde cero, planteado para centralizar los datos de pacientes de toda España en una base de datos interconectada con cada hospital registrado. Define tres perfiles: paciente, médico y administrador hospitalario. Incluye gestión y registro de citas, videollamadas, creación de diagnósticos y prescripción de medicamentos.",
+    "stack": ["JavaScript (React)", "Python (Flask)", "PostgreSQL", "CSS (Bootstrap)"]
   },
   {
     "id": "portfolio-personal",
-    "title": "Portfolio.exe",
+    "title": "Mi portfolio",
     "type": "Portfolio personal",
     "platform": "web",
     "image": "proyecto-3.jpeg",
-    "codePublic": null,
-    "codeUrl": null,
+    "codePublic": true,
+    "codeUrl": "https://github.com/brianborrajodev/brian-borrajo-page",
     "alt": "Portfolio personal de Brian con estética arcade, volcanes pixel art y una presentación interactiva.",
     "description": "Portfolio personal de estética arcade que presenta mi perfil, proyectos y formas de contacto. Incluye navegación entre páginas sin recarga, tema diurno y nocturno, una introducción animada estilo terminal y fichas de proyectos con sus tecnologías.",
     "stack": ["JavaScript (React)", "Python (Flask)", "PostgreSQL", "CSS (Tailwind)"]
