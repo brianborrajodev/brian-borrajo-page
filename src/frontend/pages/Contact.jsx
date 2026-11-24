@@ -39,18 +39,18 @@ const profiles = [
 
 export default function Contact() {
   return (
-    <main className="mx-auto w-full max-w-6xl px-3 py-12 sm:px-10">
-      <h1 style={{ fontSize: 'clamp(1.25rem, 7vw, 2.25rem)', whiteSpace: 'nowrap' }} className="font-arcade tracking-[-0.15em] [-webkit-text-stroke:2px_black] [paint-order:stroke_fill]">
+    <main className="theme-page mx-auto w-full max-w-6xl px-3 py-12 sm:px-10">
+      <h1 style={{ fontSize: 'clamp(0.7rem, 4.1vw, 2.25rem)', whiteSpace: 'nowrap' }} className="mx-auto text-center font-arcade tracking-[-0.15em] [-webkit-text-stroke:2px_black] [paint-order:stroke_fill]">
         <span aria-hidden="true" style={{ color: '#569cd6' }}>{'<h2> '}</span>
         <span style={{ color: '#ce9178' }}>Contacto</span>
         <span aria-hidden="true" style={{ color: '#569cd6' }}>{' </h2>'}</span>
       </h1>
-      <p className="mt-5 text-lg text-slate-300">Elige cómo quieres ponerte en contacto conmigo.</p>
+      <p style={{ fontSize: 'clamp(0.55rem, 3.2vw, 1.125rem)' }} className="theme-page-muted mt-5 text-center text-slate-300">Elige cómo quieres ponerte en contacto conmigo.</p>
 
       <section aria-labelledby="direct-contact-title" className="mt-9">
-        <h2 id="direct-contact-title" className="font-arcade text-sm [-webkit-text-stroke:1px_black] [paint-order:stroke_fill] sm:text-base">
+        <h2 id="direct-contact-title" className="whitespace-nowrap text-center font-arcade text-[clamp(0.5rem,2.2vw,1rem)] [-webkit-text-stroke:1px_black] [paint-order:stroke_fill]">
           <span aria-hidden="true" style={{ color: '#569cd6' }}>{'<h3> '}</span>
-          <span style={{ color: '#dcdcaa' }}>Contacto directo</span>
+          <span className="theme-contact-subheading text-[#dcdcaa]">Contacto directo</span>
           <span aria-hidden="true" style={{ color: '#569cd6' }}>{' </h3>'}</span>
         </h2>
         <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -60,25 +60,25 @@ export default function Contact() {
               href={contact.href}
               target={contact.id === 'whatsapp' ? '_blank' : undefined}
               rel={contact.id === 'whatsapp' ? 'noreferrer' : undefined}
-              className="group flex min-h-48 flex-col items-center justify-center gap-5 border border-[#273a58] bg-[#080f20]/95 p-6 text-center text-slate-100 transition-colors hover:border-[#287ec0] hover:bg-[#0b2a4d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+              className="theme-contact-card group flex min-h-48 flex-col items-center justify-center gap-5 border border-[#273a58] bg-[#080f20]/95 p-6 text-center text-slate-100 transition-colors hover:border-[#287ec0] hover:bg-[#0b2a4d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
             >
               <svg aria-hidden="true" viewBox="0 0 24 24" className="size-14 shrink-0 fill-current text-cyan-300 transition-transform group-hover:scale-110"><path d={contact.path} /></svg>
               <span className="font-arcade text-xs sm:text-sm">{contact.label}</span>
-              <span className="break-all font-mono text-sm text-sky-200">{contact.value}</span>
+              <span className="theme-contact-value break-all font-mono text-sm text-sky-200">{contact.value}</span>
             </a>
           ))}
         </div>
       </section>
 
       <section aria-labelledby="professional-profiles-title" className="mt-10">
-        <h2 id="professional-profiles-title" className="font-arcade text-sm [-webkit-text-stroke:1px_black] [paint-order:stroke_fill] sm:text-base">
+        <h2 id="professional-profiles-title" className="whitespace-nowrap text-center font-arcade text-[clamp(0.5rem,2.2vw,1rem)] [-webkit-text-stroke:1px_black] [paint-order:stroke_fill]">
           <span aria-hidden="true" style={{ color: '#569cd6' }}>{'<h3> '}</span>
-          <span style={{ color: '#dcdcaa' }}>Perfiles profesionales</span>
+          <span className="theme-contact-subheading text-[#dcdcaa]">Perfiles profesionales</span>
           <span aria-hidden="true" style={{ color: '#569cd6' }}>{' </h3>'}</span>
         </h2>
         <div className="mx-auto mt-4 grid w-full max-w-4xl gap-5 sm:grid-cols-2">
           {profiles.map((profile) => (
-            <a key={profile.id} href={profile.href} target="_blank" rel="noreferrer" className="group flex min-h-48 flex-col items-center justify-center gap-5 border border-[#273a58] bg-[#080f20]/95 p-6 text-center text-slate-100 transition-colors hover:border-[#287ec0] hover:bg-[#0b2a4d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+            <a key={profile.id} href={profile.href} target="_blank" rel="noreferrer" className="theme-contact-card group flex min-h-48 flex-col items-center justify-center gap-5 border border-[#273a58] bg-[#080f20]/95 p-6 text-center text-slate-100 transition-colors hover:border-[#287ec0] hover:bg-[#0b2a4d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
               <svg aria-hidden="true" viewBox="0 0 24 24" className="size-14 shrink-0 fill-current text-cyan-300 transition-transform group-hover:scale-110"><path d={profile.path} /></svg>
               <span className="font-arcade text-xs sm:text-sm">{profile.label}</span>
             </a>
