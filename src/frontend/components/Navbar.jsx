@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import routes from '../routes.jsx'
 
 function PixelMoon() {
   return (
@@ -36,7 +37,7 @@ function Navbar() {
         aria-label="Navegación principal"
         className="flex w-full flex-wrap items-center justify-between gap-y-3 lg:grid lg:grid-cols-[1fr_auto_1fr]"
       >
-        <a href="#home" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 md:gap-4 lg:justify-self-start" aria-label="Portfolio.exe, inicio">
+        <a href="/home" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 md:gap-4 lg:justify-self-start" aria-label="Portfolio.exe, inicio">
           <svg aria-hidden="true" viewBox="0 0 20 16" className="h-6 w-[30px] shrink-0 text-[#53bfff]" fill="currentColor" shapeRendering="crispEdges">
             <path fillRule="evenodd" d="M0 0h20v16H0z M2 4v10h16V4z" />
             <path d="M7 5h2v1h2v1h2v1h2v2h-2v1h-2v1H9v1H7z" />
@@ -47,9 +48,9 @@ function Navbar() {
         </a>
 
         <div id="navbar-links" className={`${menuOpen ? 'grid' : 'hidden'} order-last w-full grid-cols-2 gap-1 font-mono text-xs md:order-none md:ml-auto md:mr-7 md:flex md:w-auto md:text-[11px] lg:mx-0`}>
-          {['home', 'proyectos', 'redes', 'contacto'].map((section) => (
-            <a key={section} href={`#${section}`} onClick={() => setMenuOpen(false)} className="border border-[#287ec0] px-3 py-3 text-[#65c5ff] hover:bg-[#0b2a4d] md:py-2">
-              /{section}
+          {routes.map(({ path }) => (
+            <a key={path} href={path} onClick={() => setMenuOpen(false)} className="border border-[#287ec0] px-3 py-3 text-[#65c5ff] hover:bg-[#0b2a4d] md:py-2">
+              {path}
             </a>
           ))}
         </div>
