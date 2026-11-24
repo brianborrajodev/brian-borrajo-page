@@ -50,21 +50,21 @@ const destinations = [
     number: '01 / EXPLORAR',
     title: 'Mis proyectos',
     description: 'Ideas que se convierten en software.',
-    href: '#proyectos',
+    href: '/proyectos',
   },
   {
     id: 'redes',
     number: '02 / CONECTAR',
     title: 'Mis redes',
     description: 'Mi lado más allá del editor.',
-    href: '#redes',
+    href: '/redes',
   },
   {
     id: 'contacto',
     number: '03 / CONVERSAR',
     title: 'Contacto',
     description: '¿Construimos algo juntos?',
-    href: 'mailto:hola@brianborrajo.com',
+    href: '/contacto',
   },
 ]
 
@@ -125,7 +125,7 @@ function Home() {
                   <path d="M4 1h7v7H9V5H8v1H7v1H6v1H5v1H4v1H3v1H1V9h1V8h1V7h1V6h1V5h1V4h1V3H4z" />
                 </svg>
               </div>
-              <h2 className="mt-5 text-base leading-8 text-[#e8efff] group-hover:text-[#65c5ff] group-focus-visible:text-[#65c5ff] sm:mt-7 lg:text-xl">
+              <h2 className={`mt-5 text-base leading-8 group-hover:text-[#65c5ff] group-focus-visible:text-[#65c5ff] sm:mt-7 lg:text-xl ${destination.id === 'proyectos' ? 'text-cyan-300' : 'text-[#e8efff]'}`}>
                 {destination.title}
               </h2>
               <p className="mt-2 text-xs leading-7 text-[#c4d0e2] lg:text-sm">

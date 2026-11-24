@@ -1,0 +1,22 @@
+[
+  {
+    "id": "rebusca-46",
+    "title": "REBUSCA 46",
+    "type": "Restauración",
+    "platform": "web",
+    "image": "proyecto-1.jpeg",
+    "alt": "Portada de ReBusca46 con una pizza recién servida y el botón Haz tu pedido.",
+    "description": "Una web de cocina italiana que reúne los menús, las ofertas y las ubicaciones de ReBusca46. Desde la portada puedes comenzar un pedido o buscar un local donde compartir una pizza.",
+    "stack": ["JavaScript (React)", "Python (Flask)", "PostgreSQL", "CSS (Bootstrap)"]
+  },
+  {
+    "id": "sns-lexdibri",
+    "title": "SNS LEXDIBRI",
+    "type": "Portal sanitario",
+    "platform": "web",
+    "image": "proyecto-2.jpeg",
+    "alt": "Portada de SNS Lexdibri con el lema Tu salud, conectada y el acceso al portal.",
+    "description": "Un portal que reúne servicios sanitarios, especialidades e información de salud en un único espacio. La portada da acceso al portal personal y destaca los apartados de diagnóstico, contacto y urgencias.",
+    "stack": ["JavaScript (React)", "Python (Flask)", "MySQL", "CSS (Tailwind)"]
+  }
+]

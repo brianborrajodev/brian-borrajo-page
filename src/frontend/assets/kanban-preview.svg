@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 405">
+  <rect width="720" height="405" fill="#081c31"/>
+  <path fill="#133651" d="M0 0h720v65H0z"/>
+  <g font-family="monospace" fill="#d7edff">
+    <text x="28" y="42" font-size="24">KANBAN // Sprint 01</text>
+    <g font-size="18" fill="#76dafa"><text x="30" y="114">Pendiente</text><text x="260" y="114">En curso</text><text x="490" y="114">Completado</text></g>
+    <path fill="#23435c" d="M30 134h200v68H30z M30 216h200v68H30z M260 134h200v68H260z M490 134h200v68H490z"/>
+    <g font-size="16"><text x="44" y="175">Probar filtros</text><text x="44" y="257">Revisar textos</text><text x="274" y="175">Crear tarjetas</text><text x="504" y="175">Diseñar tablero</text></g>
+  </g>
+</svg>
