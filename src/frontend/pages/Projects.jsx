@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import projects from '../data/projects.json'
+import { filterProjects, getProjectCodeAction, getProjectPreview } from '../utils/projectUtils.js'
 
-const previewLimit = 120
 const filters = [
   { id: 'all', label: 'Todos', icon: 'all' },
   { id: 'web', label: 'Web', icon: 'web' },
@@ -26,8 +26,8 @@ function FilterIcon({ type }) {
 function ProjectCard({ project, visible }) {
   const dialog = useRef(null)
   const image = images[`../assets/${project.image}`]
-  const truncated = project.description.length > previewLimit
-  const preview = truncated ? `${project.description.slice(0, previewLimit).replace(/\s+\S*$/, '')}…` : project.description
+  const { text: preview, truncated } = getProjectPreview(project.description)
+  const codeAction = getProjectCodeAction(project)
   return (
     <article aria-hidden={!visible} className={visible ? '' : 'pointer-events-none invisible select-none'}>
       <button type="button" aria-haspopup="dialog" aria-label={`Ver ficha de ${project.title}`} onClick={() => dialog.current.showModal()} className="theme-card group h-full w-full cursor-pointer border border-[#273a58] bg-[#080f20] text-left transition-colors hover:border-[#287ec0] hover:bg-[#0b2a4d] focus-visible:outline-cyan-300">
@@ -45,18 +45,18 @@ function ProjectCard({ project, visible }) {
             </span>
           </span>
           <span className="theme-card-description block text-slate-300">{preview}</span>
-          {truncated && <span className="mt-4 block font-mono text-sky-300">Ver más...</span>}
+          {truncated && <span className="theme-card-more mt-4 block font-mono text-sky-300">Ver más...</span>}
         </span>
       </button>
       <dialog ref={dialog} aria-labelledby={`${project.id}-title`} className="theme-dialog fixed inset-0 m-auto max-h-[90dvh] w-[min(92vw,40rem)] overflow-y-auto border border-sky-500 bg-[#081526] p-5 text-slate-100 backdrop:bg-black/80 sm:p-8">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          {project.codePublic === true ? (
-            <a href={project.codeUrl} target="_blank" rel="noreferrer" className="theme-dialog-code-link border border-cyan-700 px-3 py-2 font-mono text-xs text-cyan-200 hover:bg-[#0b2a4d]">
-              <span aria-hidden="true" className="mr-2 font-bold">&lt;/&gt;</span>Ver código público
+          {codeAction.href ? (
+            <a href={codeAction.href} target="_blank" rel="noreferrer" className="theme-dialog-code-link border border-cyan-700 px-3 py-2 font-mono text-xs text-cyan-200 hover:bg-[#0b2a4d]">
+              <span aria-hidden="true" className="mr-2 font-bold">&lt;/&gt;</span>{codeAction.label}
             </a>
           ) : (
             <button type="button" disabled className="cursor-not-allowed border border-slate-700 px-3 py-2 font-mono text-xs text-slate-400">
-              <span aria-hidden="true" className="mr-2 font-bold">&lt;/&gt;</span>{project.codePublic === false ? 'Código privado' : 'Enlace pendiente'}
+              <span aria-hidden="true" className="mr-2 font-bold">&lt;/&gt;</span>{codeAction.label}
             </button>
           )}
           <form method="dialog"><button className="cursor-pointer border border-red-500/80 bg-red-300/75 px-3 py-2 text-sm text-red-950 transition-colors hover:bg-red-400/85">Cerrar ×</button></form>
@@ -89,12 +89,12 @@ function ProjectCard({ project, visible }) {
 
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('all')
-  const hasVisibleProjects = activeFilter === 'all'
-    || projects.some((project) => project.platform === activeFilter)
+  const visibleProjects = filterProjects(projects, activeFilter)
+  const hasVisibleProjects = visibleProjects.length > 0
 
   return (
     <main className="theme-page mx-auto w-full max-w-6xl px-3 py-12 sm:px-10">
-      <h1 style={{ fontSize: 'clamp(0.7rem, 4.1vw, 2.25rem)', whiteSpace: 'nowrap' }} className="mx-auto text-center font-arcade tracking-[-0.15em] [-webkit-text-stroke:2px_black] [paint-order:stroke_fill]">
+      <h1 style={{ fontSize: 'clamp(0.7rem, 4.1vw, 2.25rem)', whiteSpace: 'nowrap' }} className="theme-project-title mx-auto text-center font-arcade tracking-[-0.15em] [-webkit-text-stroke:2px_black] [paint-order:stroke_fill]">
         <span aria-hidden="true" style={{ color: '#569cd6' }}>{'<h2> '}</span>
         <span style={{ color: '#ce9178' }}>Mis proyectos</span>
         <span aria-hidden="true" style={{ color: '#569cd6' }}>{' </h2>'}</span>
@@ -128,7 +128,7 @@ export default function Projects() {
             <ProjectCard
               key={project.id}
               project={project}
-              visible={activeFilter === 'all' || project.platform === activeFilter}
+              visible={visibleProjects.includes(project)}
             />
           ))}
         </div>
