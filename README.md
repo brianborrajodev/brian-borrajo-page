@@ -1,8 +1,10 @@
 # Brian Borrajo Page
 
-Portfolio personal de Brian Borrajo. El MVP permite conocerme, explorar mis proyectos y redes, y encontrar mis datos de contacto. Actualmente es una web informativa: no tiene funciones de interacción para visitantes ni conexión de sus páginas a una base de datos.
+Portfolio personal de Brian Borrajo. El MVP permite conocerme, explorar mis proyectos y redes, y encontrar mis datos de contacto. Incluye navegación, filtros y fichas interactivas; todavía no ofrece interacción social (cuentas, likes o comentarios) ni guarda el contenido del portfolio en una base de datos.
 
-![Estado](https://img.shields.io/badge/estado-en%20desarrollo-yellow)
+![Estado](https://img.shields.io/badge/estado-en%20producci%C3%B3n-brightgreen)
+
+🌐 **Portfolio en producción:** [brian-borrajo-otalvaro-portfolio.onrender.com/home](https://brian-borrajo-otalvaro-portfolio.onrender.com/home)
 
 ## Tabla de contenidos
 
@@ -19,7 +21,7 @@ Portfolio personal de Brian Borrajo. El MVP permite conocerme, explorar mis proy
 
 ## Funcionalidades (MVP)
 
-El MVP actual es un portfolio sin cuentas de usuario, likes, comentarios ni persistencia de datos. Se puede navegar entre sus páginas y abrir las fichas de los proyectos.
+El MVP publicado es un portfolio informativo. Permite navegar entre páginas sin recarga, filtrar proyectos, consultar sus fichas y abrir los enlaces de contacto y perfiles. No incluye cuentas de usuario, likes, comentarios ni persistencia del contenido del portfolio en una base de datos.
 
 - [x] Home con diseño arcade y adaptación a móvil y escritorio.
 - [x] Página de proyectos con filtros y fichas en modal.
@@ -39,8 +41,8 @@ El MVP actual es un portfolio sin cuentas de usuario, likes, comentarios ni pers
 | Capa | Tecnología |
 | --- | --- |
 | Frontend | JavaScript, React, Vite |
-| Backend | Python y Flask (actualmente solo ofrece endpoints de salud) |
-| Base de datos | PostgreSQL (infraestructura preparada; el MVP no la usa para el contenido del portfolio) |
+| Backend | Python 3.12 y Flask (actualmente solo ofrece endpoints de salud) |
+| Base de datos | PostgreSQL 16 (infraestructura preparada; el MVP no la usa para el contenido del portfolio) |
 | Modelado y migraciones | SQLAlchemy + Flask-SQLAlchemy + Flask-Migrate (base para funcionalidades futuras) |
 | Entorno de desarrollo | Docker (Docker Compose) |
 | Autenticación | OAuth con LinkedIn y GitHub (planificada; aún no implementada) |
@@ -55,7 +57,7 @@ El MVP actual es un portfolio sin cuentas de usuario, likes, comentarios ni pers
 │   └── ADR-*.md     # Decisiones de arquitectura
 ├── public/          # Archivos estáticos de Vite
 ├── src/
-│   ├── frontend/    # Código React (main.jsx, App.jsx, assets/, components/, styles/)
+│   ├── frontend/    # React: App.jsx, main.jsx, routes.jsx, assets/, components/, layouts/, pages/, data/, styles/
 │   └── backend/     # API Flask
 │       ├── Dockerfile
 │       ├── app.py
@@ -82,8 +84,8 @@ El MVP actual es un portfolio sin cuentas de usuario, likes, comentarios ni pers
 ### Requisitos previos
 
 - [Docker](https://www.docker.com/) con Docker Compose (incluido en Docker Desktop).
-- Node.js y npm (versión por definir) si se ejecuta el frontend fuera de Docker.
-- Python 3 (versión por definir) si se ejecuta el backend fuera de Docker.
+- Node.js 22 y npm si se ejecuta el frontend fuera de Docker.
+- Python 3.12 si se ejecuta el backend fuera de Docker.
 
 ### Instalación
 
@@ -135,7 +137,7 @@ docker compose exec db psql -U portfolio -d portfolio
 
 ## Base de datos y migraciones
 
-Los modelos de SQLAlchemy en `src/backend/models/` son la **única fuente de verdad** del esquema: un archivo `.py` por tabla, todos heredan de `db.Model` y se exportan desde `models/__init__.py`. Flask-Migrate (integrado en `src/backend/app.py` mediante `src/backend/extensions.py`, donde también está la convención de nombres de restricciones) genera y aplica las migraciones con los comandos `flask db ...`. `docs/database/schema.dbml` y `docs/database/schema.svg` se mantienen solo como documentación visual, así que hay que actualizarlos cuando cambien los modelos. `init.sql` se eliminó: las tablas las crea únicamente la migración.
+El backend y el esquema de PostgreSQL están preparados para futuras funciones (usuarios, likes y comentarios), pero **el frontend del MVP publicado no consume la API ni guarda el contenido del portfolio en la base de datos**. Los modelos de SQLAlchemy en `src/backend/models/` son la fuente de verdad del esquema: un archivo `.py` por tabla, todos heredan de `db.Model` y se exportan en `models/__init__.py`. Flask-Migrate (integrado en `src/backend/app.py` mediante `src/backend/extensions.py`) genera y aplica migraciones con `flask db ...`. `docs/database/schema.dbml` y `docs/database/schema.svg` son documentación visual del esquema.
 
 > Flask-Migrate usa Alembic internamente: por eso `src/backend/migrations/` contiene un `alembic.ini` y un `env.py` generados por `flask db init`. No se gestionan a mano ni existe un `alembic.ini` en la raíz; las operaciones se hacen siempre con `flask db`.
 
@@ -207,7 +209,7 @@ Ejemplos: rama `feat/login-github`, commit `docs: add initial README`.
 
 ## Estado del proyecto
 
-🚧 **En desarrollo.** Actualmente trabajando en el MVP.
+🚀 **En producción.** El MVP está publicado en [Render](https://brian-borrajo-otalvaro-portfolio.onrender.com/home); el proyecto continúa en desarrollo para futuras funcionalidades.
 
 ## Licencia y autor
 
