@@ -59,7 +59,7 @@ function ProjectCard({ project, visible }) {
               <span aria-hidden="true" className="mr-2 font-bold">&lt;/&gt;</span>{project.codePublic === false ? 'Código privado' : 'Enlace pendiente'}
             </button>
           )}
-          <form method="dialog"><button className="cursor-pointer border border-sky-600 px-3 py-2 text-sm text-sky-200">Cerrar ×</button></form>
+          <form method="dialog"><button className="cursor-pointer border border-red-500/80 bg-red-300/75 px-3 py-2 text-sm text-red-950 transition-colors hover:bg-red-400/85">Cerrar ×</button></form>
         </div>
         <p className="font-mono text-xs uppercase text-cyan-300">{project.type}</p>
         <h2 id={`${project.id}-title`} className="my-4 font-arcade text-lg">{project.title}</h2>

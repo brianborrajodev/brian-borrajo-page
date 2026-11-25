@@ -1,9 +1,37 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import landscape from '../assets/home-volcan-background.jpg'
+import dayLandscape from '../assets/home-mountains-background.jpg'
 import avatar from '../assets/avatar-img.png'
+import avatarOpening from '../assets/anim-abriendo-manos.png'
+import avatarFrame2 from '../assets/anim-2.png'
+import avatarFrame3 from '../assets/anim-3.png'
+import avatarFrame4 from '../assets/anim-4.png'
+import avatarGreeting1 from '../assets/anim-saludando-1.png'
+import avatarGreeting2 from '../assets/anim-saludando-2.png'
+import avatarGreeting3 from '../assets/anim-saludando-3.png'
+import avatarGreeting4 from '../assets/anim-saludando-4.png'
 
 const fullNameQuery = '(min-width: 40rem)'
+const avatarFrames = [
+  avatar,
+  avatarOpening,
+  avatarGreeting1,
+  avatarGreeting2,
+  avatarGreeting3,
+  avatarGreeting4,
+  avatarGreeting1,
+  avatarOpening,
+  avatar,
+  avatar, // anim-1 todavía no está en assets; se usa el avatar base provisionalmente.
+  avatarFrame2,
+  avatarFrame3,
+  avatarFrame4,
+  avatarFrame4,
+  avatarFrame3,
+  avatarFrame2,
+  avatar,
+]
 
 function TerminalName() {
   const [showFullName, setShowFullName] = useState(() => window.matchMedia(fullNameQuery).matches)
@@ -66,6 +94,25 @@ const destinations = [
 function Home() {
   const navigate = useNavigate()
   const roleTitleRef = useRef(null)
+  const [avatarFrame, setAvatarFrame] = useState(avatar)
+
+  useEffect(() => {
+    const preloadedFrames = [...new Set(avatarFrames)].map((src) => {
+      const image = new Image()
+      image.src = src
+      return image
+    })
+    let frameIndex = 0
+    const timer = window.setInterval(() => {
+      frameIndex = (frameIndex + 1) % avatarFrames.length
+      setAvatarFrame(avatarFrames[frameIndex])
+    }, 450)
+
+    return () => {
+      window.clearInterval(timer)
+      preloadedFrames.forEach((image) => image.removeAttribute('src'))
+    }
+  }, [])
 
   useLayoutEffect(() => {
     const title = roleTitleRef.current
@@ -102,7 +149,7 @@ function Home() {
 
   return (
     <main
-      style={{ backgroundImage: `url(${landscape})` }}
+      style={{ '--home-background-night': `url(${landscape})`, '--home-background-day': `url(${dayLandscape})` }}
       id="home"
       className="theme-home relative flex min-h-[calc(100dvh-9rem)] w-full min-w-0 flex-col bg-cover bg-center bg-no-repeat px-0 pt-0 pb-8 font-arcade text-[#e8efff] sm:pb-10"
     >
@@ -148,14 +195,14 @@ function Home() {
         </div>
 
         <section aria-label="Biografía" className="mx-4 mb-0 flex flex-col items-center gap-0 sm:mx-10 sm:mb-8 sm:flex-row sm:items-end sm:justify-center sm:gap-6">
-          <div className="relative z-20 mb-[-2rem] w-full max-w-sm rounded-[1.5rem] border-2 border-white bg-white px-4 py-3 text-left text-xs leading-6 text-slate-900 shadow-[4px_4px_0_#07152e] sm:mb-32 sm:max-w-none sm:flex-1 sm:px-6 sm:py-5 sm:text-sm md:mb-40 lg:mr-[91px] lg:w-[min(32rem,42vw)] lg:flex-none lg:px-5 xl:mb-56 xl:mr-[123px]">
+          <div className="relative z-20 mb-[-2rem] w-full max-w-sm rounded-[1.5rem] border-2 border-white bg-white px-4 py-3 text-left text-xs leading-6 text-slate-900 shadow-[4px_4px_0_#07152e] sm:mb-32 sm:max-w-none sm:flex-1 sm:px-6 sm:py-5 sm:text-sm md:mb-40 lg:mr-[91px] lg:w-[min(32rem,42vw)] lg:flex-none lg:translate-y-[32px] lg:px-5 xl:mb-56 xl:mr-[123px]">
             <p>¡Hola! Soy Brian, Desarrollador de Software Full Stack. Aquí encontrarás mis proyectos, y mi contacto ¡espero que te guste mi portfolio!</p>
             <span aria-hidden="true" className="absolute -bottom-3 left-10 size-6 bg-white [clip-path:polygon(0_0,100%_0,100%_100%)] sm:top-[36%] sm:bottom-auto sm:left-[-1rem] sm:[clip-path:polygon(0_0,100%_50%,0_100%)] lg:left-auto lg:right-[-1rem]" />
           </div>
-          <div className="relative flex h-60 w-[min(80vw,18rem)] shrink-0 items-start justify-center overflow-hidden sm:h-auto sm:w-auto sm:items-end sm:overflow-visible lg:-translate-x-[91px] xl:-translate-x-[123px]">
+          <div className="relative flex h-60 w-[min(80vw,18rem)] shrink-0 items-start justify-center overflow-hidden sm:h-auto sm:w-auto sm:items-end sm:overflow-visible lg:-translate-x-[91px] lg:translate-y-[32px] xl:-translate-x-[123px]">
             <img
-              src={avatar}
-              alt="Avatar pixel art de Brian"
+              src={avatarFrame}
+              alt="Avatar pixel art animado de Brian"
               className="h-[430px] w-full max-w-none shrink-0 object-cover object-top [image-rendering:pixelated] sm:relative sm:z-10 sm:h-72 sm:w-56 sm:object-contain sm:object-bottom md:h-80 md:w-60 xl:h-96 xl:w-72"
             />
           </div>

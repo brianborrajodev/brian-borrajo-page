@@ -107,7 +107,15 @@ html.day-mode .theme-home {
 }
 
 html.day-mode .theme-home-overlay {
-  background-color: rgb(255 255 255 / 55%);
+  background-color: transparent;
+}
+
+.theme-home {
+  background-image: var(--home-background-night);
+}
+
+html.day-mode .theme-home {
+  background-image: var(--home-background-day);
 }
 
 html.day-mode .theme-home-name {
