@@ -198,6 +198,26 @@ html.day-mode .theme-card-description {
   color: #334155;
 }
 
+html.day-mode .theme-card-more {
+  color: #111827;
+}
+
+html.day-mode h2,
+html.day-mode h3 {
+  -webkit-text-stroke: 2px #0f172a;
+  paint-order: stroke fill;
+}
+
+html.day-mode .theme-project-title {
+  -webkit-text-stroke: 4px #0f172a;
+  paint-order: stroke fill;
+}
+
+html.day-mode .theme-contact-title {
+  -webkit-text-stroke: 4px #0f172a;
+  paint-order: stroke fill;
+}
+
 html.day-mode .theme-filter {
   color: #334155;
   border-color: #9ab6cf;

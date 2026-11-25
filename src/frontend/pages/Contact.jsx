@@ -40,7 +40,7 @@ const profiles = [
 export default function Contact() {
   return (
     <main className="theme-page mx-auto w-full max-w-6xl px-3 py-12 sm:px-10">
-      <h1 style={{ fontSize: 'clamp(0.7rem, 4.1vw, 2.25rem)', whiteSpace: 'nowrap' }} className="mx-auto text-center font-arcade tracking-[-0.15em] [-webkit-text-stroke:2px_black] [paint-order:stroke_fill]">
+      <h1 style={{ fontSize: 'clamp(0.7rem, 4.1vw, 2.25rem)', whiteSpace: 'nowrap' }} className="theme-contact-title mx-auto text-center font-arcade tracking-[-0.15em] [-webkit-text-stroke:2px_black] [paint-order:stroke_fill]">
         <span aria-hidden="true" style={{ color: '#569cd6' }}>{'<h2> '}</span>
         <span style={{ color: '#ce9178' }}>Contacto</span>
         <span aria-hidden="true" style={{ color: '#569cd6' }}>{' </h2>'}</span>
