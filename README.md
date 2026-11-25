@@ -1,6 +1,6 @@
-# Brian Borrajo Page
+#  Portfolio Web de Brian Borrajo Otalvaro
 
-Portfolio personal de Brian Borrajo. El MVP permite conocerme, explorar mis proyectos y redes, y encontrar mis datos de contacto. Incluye navegación, filtros y fichas interactivas; todavía no ofrece interacción social (cuentas, likes o comentarios) ni guarda el contenido del portfolio en una base de datos.
+Bienvenidos al README de mi portfolio personal . El MVP permite conocerme, explorar mis proyectos y redes, y encontrar mis datos de contacto. Incluye navegación, filtros y fichas interactivas; todavía no ofrece interacción social (cuentas, likes o comentarios) ni guarda el contenido del portfolio en una base de datos.
 
 ![Estado](https://img.shields.io/badge/estado-en%20producci%C3%B3n-brightgreen)
 
