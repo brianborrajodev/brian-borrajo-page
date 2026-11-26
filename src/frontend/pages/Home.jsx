@@ -149,10 +149,11 @@ function Home() {
 
   return (
     <main
-      style={{ '--home-background-night': `url(${landscape})`, '--home-background-day': `url(${dayLandscape})` }}
       id="home"
-      className="theme-home relative flex min-h-[calc(100dvh-9rem)] w-full min-w-0 flex-col bg-cover bg-center bg-no-repeat px-0 pt-0 pb-8 font-arcade text-[#e8efff] sm:pb-10"
+      className="theme-home relative flex min-h-[calc(100dvh-9rem)] w-full min-w-0 flex-col overflow-hidden px-0 pt-0 pb-8 font-arcade text-[#e8efff] sm:pb-10"
     >
+      <img src={landscape} alt="" aria-hidden="true" fetchPriority="high" className="theme-home-background theme-home-background-night" />
+      <img src={dayLandscape} alt="" aria-hidden="true" className="theme-home-background theme-home-background-day" />
       <div aria-hidden="true" className="theme-home-overlay pointer-events-none absolute inset-0 z-0" />
       <section className="relative z-10 mx-auto flex w-full min-w-0 flex-1 flex-col">
         <div className="flex flex-1 flex-col items-center justify-start pb-8 pt-12 text-center sm:pb-14">
