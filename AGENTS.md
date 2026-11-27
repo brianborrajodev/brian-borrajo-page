@@ -78,19 +78,19 @@ El stack se arranca con `--watch`: Compose sincroniza `src/frontend/`, `public/`
 
 - PostgreSQL 16 en el servicio `db`; datos persistentes en el volumen `pgdata`.
 - Los modelos SQLAlchemy en `src/backend/models/` son la **única fuente de verdad** del esquema: un `.py` por tabla que hereda de `db.Model`, exportados en `models/__init__.py`. La convención de nombres de restricciones está en `extensions.py`. `docs/database/schema.dbml` y `schema.svg` se conservan solo como documentación: al cambiar los modelos, actualízalos también para que no queden desfasados. `init.sql` sí se eliminó; no lo reintroduzcas.
-- Flask-Migrate se inicializa en `src/backend/extensions.py` y se registra en `app.py` con `SQLALCHEMY_DATABASE_URI` (la misma `DATABASE_URL` o `POSTGRES_*`). El repositorio de revisiones es `src/backend/migrations/`, generado por `flask db init`; Flask-Migrate usa Alembic por dentro, así que ese `alembic.ini` no se gestiona a mano.
+- Flask-Migrate se inicializa en `src/backend/extensions.py` y se registra en `app.py` con `SQLALCHEMY_DATABASE_URI`, construido exclusivamente con las variables PostgreSQL obligatorias de `.env`. El repositorio de revisiones es `src/backend/migrations/`, generado por `flask db init`; Flask-Migrate usa Alembic por dentro, así que ese `alembic.ini` no se gestiona a mano.
 - Un volumen nuevo arranca sin tablas: aplica `docker compose run --rm upgrade`.
 - Para cambios de esquema: editar modelos → `docker compose run --rm migrate -m "descripción"` → revisar la revisión → `docker compose run --rm upgrade` → `docker compose run --rm backend flask --app app:app db check`. Propón una migración antes de cualquier cambio destructivo con datos existentes.
 - Los servicios `migrate` y `upgrade` usan el perfil `tools` y montan `./src/backend/migrations:/app/migrations`; no arrancan con `docker compose up`.
 - `docker compose run` usa la imagen construida: reconstruye el backend si cambian dependencias o el `Dockerfile`.
-- La API construye `DATABASE_URL` desde `POSTGRES_*` si no se define la variable; usa `psycopg` (v3).
+- La API construye la URI PostgreSQL desde `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_HOST`, `POSTGRES_PORT` y `POSTGRES_DB`, todos obligatorios y sin valores por defecto; usa `psycopg` (v3).
 
 ## 6. Frontend
 
 - React 19 + Vite 8 + Tailwind CSS v4 (mediante `@tailwindcss/vite`).
 - Punto de entrada: `index.html` → `/src/frontend/main.jsx`.
 - Estáticos servidos desde `public/` se referencian con ruta absoluta (`/icons.svg`); los importados desde `src/frontend/assets/` se referencian con `import`.
-- En `.env` están `FRONTEND_URL` (origen permitido por CORS), `BACKEND_URL` (URL del servicio) y `VITE_API_URL` (URL que consume el frontend). Las tres se leen directamente desde `.env`; no hay mapeos entre ellas. Vite solo expone al navegador variables `VITE_*`.
+- `.env.example` enumera la configuración requerida por Compose, Flask y Vite. Los valores se leen desde `.env` sin fallbacks en Python, Compose ni la configuración de Vite. Vite solo expone al navegador variables `VITE_*`.
 
 ## 7. Backend
 

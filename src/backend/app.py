@@ -14,27 +14,24 @@ load_dotenv()
 
 
 def get_database_url() -> str:
-    """Devuelve la URL de PostgreSQL, construyéndola desde las variables POSTGRES_*."""
-    if database_url := os.environ.get("DATABASE_URL"):
-        return database_url
-
-    user = os.environ.get("POSTGRES_USER", "portfolio")
-    password = os.environ.get("POSTGRES_PASSWORD", "portfolio")
-    host = os.environ.get("POSTGRES_HOST", "db")
-    port = os.environ.get("POSTGRES_PORT", "5432")
-    database = os.environ.get("POSTGRES_DB", "portfolio")
+    """Construye la URL de PostgreSQL con los valores obligatorios del entorno."""
+    user = os.environ["POSTGRES_USER"]
+    password = os.environ["POSTGRES_PASSWORD"]
+    host = os.environ["POSTGRES_HOST"]
+    port = os.environ["POSTGRES_PORT"]
+    database = os.environ["POSTGRES_DB"]
     return f"postgresql://{user}:{password}@{host}:{port}/{database}"
 
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-only-change-me")
+app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
 app.config["SQLALCHEMY_DATABASE_URI"] = get_database_url()
 
 db.init_app(app)
 migrate.init_app(app, db)
 
 # CORS: único origen permitido, el declarado en FRONTEND_URL (.env)
-frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:5173")
+frontend_url = os.environ["FRONTEND_URL"]
 CORS(app, resources={r"/*": {"origins": [frontend_url]}})
 
 
@@ -58,4 +55,4 @@ def health_db():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "5000")))
+    app.run(host=os.environ["FLASK_RUN_HOST"], port=int(os.environ["FLASK_RUN_PORT"]))

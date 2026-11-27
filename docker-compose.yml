@@ -4,15 +4,16 @@ services:
     container_name: portfolio-db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-portfolio}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-portfolio}
-      POSTGRES_DB: ${POSTGRES_DB:-portfolio}
+      POSTGRES_USER: ${POSTGRES_USER:?Define POSTGRES_USER en .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Define POSTGRES_PASSWORD en .env}
+      POSTGRES_DB: ${POSTGRES_DB:?Define POSTGRES_DB en .env}
+    command: ["postgres", "-p", "${POSTGRES_PORT:?Define POSTGRES_PORT en .env}"]
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "${POSTGRES_EXPOSED_PORT:?Define POSTGRES_EXPOSED_PORT en .env}:${POSTGRES_PORT:?Define POSTGRES_PORT en .env}"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-portfolio} -d ${POSTGRES_DB:-portfolio}"]
+      test: ["CMD-SHELL", "pg_isready -h ${POSTGRES_HEALTHCHECK_HOST:?Define POSTGRES_HEALTHCHECK_HOST en .env} -p ${POSTGRES_PORT:?Define POSTGRES_PORT en .env} -U ${POSTGRES_USER:?Define POSTGRES_USER en .env} -d ${POSTGRES_DB:?Define POSTGRES_DB en .env}"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -22,12 +23,8 @@ services:
     container_name: portfolio-backend
     restart: unless-stopped
     env_file: .env
-    environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-portfolio}:${POSTGRES_PASSWORD:-portfolio}@db:5432/${POSTGRES_DB:-portfolio}
-      POSTGRES_HOST: db
-      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
     ports:
-      - "5000:5000"
+      - "${BACKEND_EXPOSED_PORT:?Define BACKEND_EXPOSED_PORT en .env}:${FLASK_RUN_PORT:?Define FLASK_RUN_PORT en .env}"
     depends_on:
       db:
         condition: service_healthy
@@ -48,9 +45,6 @@ services:
     build: ./src/backend
     profiles: ["tools"]
     env_file: .env
-    environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-portfolio}:${POSTGRES_PASSWORD:-portfolio}@db:5432/${POSTGRES_DB:-portfolio}
-      POSTGRES_HOST: db
     volumes:
       - ./src/backend/migrations:/app/migrations
     depends_on:
@@ -62,9 +56,6 @@ services:
     build: ./src/backend
     profiles: ["tools"]
     env_file: .env
-    environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-portfolio}:${POSTGRES_PASSWORD:-portfolio}@db:5432/${POSTGRES_DB:-portfolio}
-      POSTGRES_HOST: db
     volumes:
       - ./src/backend/migrations:/app/migrations
     depends_on:
@@ -79,9 +70,11 @@ services:
     container_name: portfolio-frontend
     restart: unless-stopped
     environment:
-      VITE_API_URL: ${VITE_API_URL:-http://localhost:5000}
+      VITE_API_URL: ${VITE_API_URL:?Define VITE_API_URL en .env}
+      VITE_HOST: ${VITE_HOST:?Define VITE_HOST en .env}
+      VITE_PORT: ${VITE_PORT:?Define VITE_PORT en .env}
     ports:
-      - "5173:5173"
+      - "${FRONTEND_EXPOSED_PORT:?Define FRONTEND_EXPOSED_PORT en .env}:${VITE_PORT:?Define VITE_PORT en .env}"
     develop:
       watch:
         - action: sync
