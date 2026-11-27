@@ -41,7 +41,7 @@ function Navbar() {
         aria-label="Navegación principal"
         className="flex w-full min-w-0 flex-wrap items-center justify-between gap-y-3 lg:grid lg:grid-cols-[1fr_auto_1fr]"
       >
-        <button type="button" onClick={() => navigate('/home')} className="flex cursor-pointer items-center gap-2 text-left md:gap-4 lg:justify-self-start" aria-label="Portfolio.exe, inicio">
+        <button type="button" onClick={() => navigate('/')} className="flex cursor-pointer items-center gap-2 text-left md:gap-4 lg:justify-self-start" aria-label="Portfolio.exe, inicio">
           <svg aria-hidden="true" viewBox="0 0 20 16" className="theme-navbar-mark h-6 w-[30px] shrink-0 text-[#53bfff]" fill="currentColor" shapeRendering="crispEdges">
             <path fillRule="evenodd" d="M0 0h20v16H0z M2 4v10h16V4z" />
             <path d="M7 5h2v1h2v1h2v1h2v2h-2v1h-2v1H9v1H7z" />
@@ -54,7 +54,7 @@ function Navbar() {
         <div id="navbar-links" className="order-last grid w-full min-w-0 grid-cols-3 gap-1 pt-2 font-mono text-[9px] sm:text-[10px] md:order-none md:ml-auto md:mr-7 md:flex md:w-auto md:justify-center md:gap-1.5 md:pt-0 md:text-[11px] lg:mx-0">
           {routes.map(({ path }) => (
             <button key={path} type="button" onClick={() => navigate(path)} aria-current={pathname === path ? 'page' : undefined} className={`min-w-0 cursor-pointer whitespace-nowrap border px-1 py-2 text-center text-[8px] hover:bg-[#0b2a4d] sm:px-2 sm:text-[9px] md:flex-none md:px-3 md:text-[11px] ${pathname === path ? 'border-[#65c5ff] bg-[#0b2a4d] text-[#9be0ff]' : 'border-[#287ec0] text-[#65c5ff]'}`}>
-              {path}
+              {path === '/' ? '/home' : path}
             </button>
           ))}
         </div>

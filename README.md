@@ -4,7 +4,7 @@ Bienvenidos al README de mi portfolio personal . El MVP permite conocerme, explo
 
 ![Estado](https://img.shields.io/badge/estado-en%20producci%C3%B3n-brightgreen)
 
-🌐 **Portfolio en producción:** [brian-borrajo-otalvaro-portfolio.onrender.com/home](https://brian-borrajo-otalvaro-portfolio.onrender.com/home)
+🌐 **Portfolio en producción:** [brian-borrajo-otalvaro-portfolio.onrender.com](https://brian-borrajo-otalvaro-portfolio.onrender.com/)
 
 ## Tabla de contenidos
 
@@ -209,7 +209,7 @@ Ejemplos: rama `feat/login-github`, commit `docs: add initial README`.
 
 ## Estado del proyecto
 
-🚀 **En producción.** El MVP está publicado en [Render](https://brian-borrajo-otalvaro-portfolio.onrender.com/home); el proyecto continúa en desarrollo para futuras funcionalidades.
+🚀 **En producción.** El MVP está publicado en [Render](https://brian-borrajo-otalvaro-portfolio.onrender.com/); el proyecto continúa en desarrollo para futuras funcionalidades.
 
 ## Licencia y autor
 
