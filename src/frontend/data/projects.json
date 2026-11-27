@@ -9,7 +9,7 @@
     "codeUrl": null,
     "deployUrl": "https://rebusca46.onrender.com/",
     "alt": "Portada de ReBusca46 con una pizza recién servida y el botón Haz tu pedido.",
-    "description": "Plataforma web de pedidos para una cadena de restaurantes, integrada con un sistema TPV y un CRM. Permite consultar la oferta de los restaurantes y gestionar el flujo de pedidos junto con las operaciones del negocio.",
+    "description": "Proyecto greenfield de una plataforma web de pedidos para una cadena de restaurantes, desarrollada desde cero e integrada con un sistema TPV y un CRM. Permite consultar la oferta de los restaurantes y gestionar el flujo de pedidos junto con las operaciones del negocio.",
     "stack": ["JavaScript (React)", "Python (Flask)", "MySQL", "CSS (Tailwind)"]
   },
   {
