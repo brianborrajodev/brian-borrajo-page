@@ -288,6 +288,10 @@ html.day-mode .theme-dialog-code-link {
   border-color: #7aa5c5;
 }
 
+.theme-deploy-button {
+  border-image: linear-gradient(90deg, rgb(125 211 252 / 95%), rgb(125 211 252 / 55%) 68%, transparent) 1;
+}
+
 html.day-mode .theme-dialog-stack {
   border-color: #a8bfd5;
   background-color: #e8f0f7;

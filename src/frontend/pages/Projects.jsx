@@ -10,6 +10,15 @@ const filters = [
 ]
 const images = import.meta.glob('../assets/proyecto-*.{jpeg,jpg,png,webp}', { eager: true, import: 'default' })
 
+function WebIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="size-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.6">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18M5 6.5h14M5 17.5h14" />
+    </svg>
+  )
+}
+
 function FilterIcon({ type }) {
   const shared = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.5, strokeLinejoin: 'round', strokeLinecap: 'round' }
 
@@ -63,7 +72,18 @@ function ProjectCard({ project, visible }) {
         </div>
         <p className="font-mono text-xs uppercase text-cyan-300">{project.type}</p>
         <h2 id={`${project.id}-title`} className="my-4 font-arcade text-lg">{project.title}</h2>
-        <img src={image} alt={project.alt} className="mb-4 max-h-64 w-full object-contain" />
+        <div className="relative mb-4 flex max-h-64 justify-center overflow-hidden">
+          <img src={image} alt={project.alt} className="max-h-64 w-full object-contain" />
+          {project.deployUrl ? (
+          <a href={project.deployUrl} target="_blank" rel="noreferrer" className="theme-deploy-button absolute right-3 bottom-3 inline-flex items-center gap-2 border border-sky-300/80 bg-[#287ec0]/75 px-3 py-2 font-mono text-xs text-white shadow-lg backdrop-blur-sm transition-colors hover:bg-[#287ec0]/90">
+              <WebIcon />Ir a deploy
+            </a>
+          ) : (
+            <button type="button" disabled title="Enlace de deploy pendiente" className="theme-deploy-button absolute right-3 bottom-3 inline-flex cursor-not-allowed items-center gap-2 border border-sky-300/80 bg-[#287ec0]/75 px-3 py-2 font-mono text-xs text-white shadow-lg opacity-90 backdrop-blur-sm">
+              <WebIcon />Ir a deploy
+            </button>
+          )}
+        </div>
         <section aria-labelledby={`${project.id}-description`}>
           <h3 id={`${project.id}-description`} className="mb-2 font-mono text-sm text-[#569cd6]">Descripción</h3>
           <p className="leading-7">{project.description}</p>
