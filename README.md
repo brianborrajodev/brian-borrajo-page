@@ -173,19 +173,25 @@ docker compose run --rm upgrade
 ## Variables de entorno
 
 Las variables de entorno viven en un archivo `.env` en la raíz del proyecto. **Nunca debe subirse al repositorio** (asegúrate de que está en `.gitignore`).
+Todos los valores requeridos por Compose y Flask se leen desde `.env` y no tienen valores de respaldo; copia `.env.example` y completa sus secretos antes de arrancar los servicios. Las credenciales OAuth son marcadores para la futura función de inicio de sesión y actualmente no se utilizan.
+
+`.env.example` está configurado para Docker Compose (`POSTGRES_HOST=db`). Si ejecutas Flask directamente en el host, cambia `POSTGRES_HOST` a `localhost` en tu `.env`.
 
 | Variable | Descripción |
 | --- | --- |
-| `POSTGRES_USER` / `POSTGRES_PASSWORD` / `POSTGRES_DB` | Usuario, contraseña y nombre de la base de datos PostgreSQL |
-| `POSTGRES_PORT` | Puerto PostgreSQL expuesto en el host (por defecto `5432`) |
-| `DATABASE_URL` | Cadena de conexión a PostgreSQL (opcional; tiene prioridad sobre las variables `POSTGRES_*` en la API) |
-| `SECRET_KEY` | Clave secreta de Flask |
-| `FLASK_DEBUG` | Activa el modo debug de Flask (`1` en desarrollo) |
-| `FRONTEND_URL` | URL del frontend: único origen permitido por CORS en la API (p. ej. `http://localhost:5173`) |
+| `POSTGRES_USER` / `POSTGRES_PASSWORD` / `POSTGRES_DB` | Credenciales y nombre de la base de datos PostgreSQL |
+| `POSTGRES_HOST` / `POSTGRES_PORT` | Host y puerto de PostgreSQL desde la API (en Compose, el host es `db`) |
+| `POSTGRES_HEALTHCHECK_HOST` | Host local usado por la comprobación de salud de PostgreSQL |
+| `POSTGRES_EXPOSED_PORT` | Puerto de PostgreSQL expuesto en el host |
+| `SECRET_KEY` | Clave secreta obligatoria de Flask |
+| `FLASK_DEBUG` / `FLASK_RUN_HOST` / `FLASK_RUN_PORT` | Modo de depuración y dirección/puerto de Flask |
+| `BACKEND_EXPOSED_PORT` | Puerto del backend expuesto en el host |
+| `FRONTEND_URL` | Único origen permitido por CORS (p. ej. `http://localhost:5173`) |
 | `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | Credenciales OAuth de GitHub |
 | `LINKEDIN_CLIENT_ID` / `LINKEDIN_CLIENT_SECRET` | Credenciales OAuth de LinkedIn |
-| `BACKEND_URL` | URL del servicio backend |
-| `VITE_API_URL` | URL de la API que consume el frontend; Vite solo expone al navegador variables `VITE_*` (por defecto `http://localhost:5000`) |
+| `VITE_HOST` / `VITE_PORT` | Dirección y puerto donde escucha Vite |
+| `FRONTEND_EXPOSED_PORT` | Puerto del frontend expuesto en el host |
+| `VITE_API_URL` | URL de API que usará el frontend cuando consuma endpoints; Vite solo expone al navegador variables `VITE_*` |
 
 ## Documentación
 

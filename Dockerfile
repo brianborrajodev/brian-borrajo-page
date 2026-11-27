@@ -9,6 +9,4 @@ COPY index.html vite.config.js eslint.config.js ./
 COPY public ./public
 COPY src/frontend ./src/frontend
 
-EXPOSE 5173
-
 CMD ["npm", "run", "dev"]
