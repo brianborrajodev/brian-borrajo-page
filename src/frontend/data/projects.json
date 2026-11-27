@@ -33,7 +33,7 @@
     "image": "proyecto-3.jpeg",
     "codePublic": true,
     "codeUrl": "https://github.com/brianborrajodev/brian-borrajo-page",
-    "deployUrl": "https://brian-borrajo-otalvaro-portfolio.onrender.com/home",
+    "deployUrl": "https://brian-borrajo-otalvaro-portfolio.onrender.com/",
     "alt": "Portfolio personal de Brian con estética arcade, volcanes pixel art y una presentación interactiva.",
     "description": "Portfolio personal de estética arcade que presenta mi perfil, proyectos y métodos de contacto. Incluye navegación entre páginas sin recarga, tema diurno y nocturno, una introducción animada estilo terminal y fichas con sus tecnologías. Desde ellas se puede acceder al código abierto de algunos proyectos y visitar sus versiones desplegadas en producción.",
     "stack": ["JavaScript (React)", "Python (Flask)", "PostgreSQL", "CSS (Tailwind)"]
