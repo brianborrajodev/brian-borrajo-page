@@ -7,6 +7,7 @@
     "image": "proyecto-1.jpeg",
     "codePublic": false,
     "codeUrl": null,
+    "deployUrl": "https://rebusca46.onrender.com/",
     "alt": "Portada de ReBusca46 con una pizza recién servida y el botón Haz tu pedido.",
     "description": "Plataforma web de pedidos para una cadena de restaurantes, integrada con un sistema TPV y un CRM. Permite consultar la oferta de los restaurantes y gestionar el flujo de pedidos junto con las operaciones del negocio.",
     "stack": ["JavaScript (React)", "Python (Flask)", "MySQL", "CSS (Tailwind)"]
@@ -19,8 +20,9 @@
     "image": "proyecto-2.jpeg",
     "codePublic": true,
     "codeUrl": "https://github.com/4GeeksAcademy/SistemaNacionalDeSaludLexdibri",
+    "deployUrl": "https://sistemanacionaldesaludlexdibri.onrender.com/",
     "alt": "Portada de SNS Lexdibri con el lema Tu salud, conectada y el acceso al portal.",
-    "description": "Sistema Nacional de Salud creado desde cero, planteado para centralizar los datos de pacientes de toda España en una base de datos interconectada con cada hospital registrado. Define tres perfiles: paciente, médico y administrador hospitalario. Incluye gestión y registro de citas, videollamadas, creación de diagnósticos y prescripción de medicamentos.",
+    "description": "Propuesta estudiantil de un Sistema Nacional de Salud, desarrollada desde cero junto con tres compañeros durante mi formación como desarrollador de software. Plantea centralizar los datos de pacientes de toda España en una base de datos interconectada con cada hospital registrado. Define tres perfiles: paciente, médico y administrador hospitalario, e incluye gestión y registro de citas, videollamadas, creación de diagnósticos y prescripción de medicamentos.",
     "stack": ["JavaScript (React)", "Python (Flask)", "PostgreSQL", "CSS (Bootstrap)"]
   },
   {
@@ -31,8 +33,9 @@
     "image": "proyecto-3.jpeg",
     "codePublic": true,
     "codeUrl": "https://github.com/brianborrajodev/brian-borrajo-page",
+    "deployUrl": "https://brian-borrajo-otalvaro-portfolio.onrender.com/home",
     "alt": "Portfolio personal de Brian con estética arcade, volcanes pixel art y una presentación interactiva.",
-    "description": "Portfolio personal de estética arcade que presenta mi perfil, proyectos y formas de contacto. Incluye navegación entre páginas sin recarga, tema diurno y nocturno, una introducción animada estilo terminal y fichas de proyectos con sus tecnologías.",
+    "description": "Portfolio personal de estética arcade que presenta mi perfil, proyectos y métodos de contacto. Incluye navegación entre páginas sin recarga, tema diurno y nocturno, una introducción animada estilo terminal y fichas con sus tecnologías. Desde ellas se puede acceder al código abierto de algunos proyectos y visitar sus versiones desplegadas en producción.",
     "stack": ["JavaScript (React)", "Python (Flask)", "PostgreSQL", "CSS (Tailwind)"]
   }
 ]
